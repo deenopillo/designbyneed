@@ -1296,3 +1296,12 @@ body {
         bottom: 4px !important;
     }
 }
+
+/* Ce code ne s'activera que sur les écrans de téléphone (moins de 768px de large) */
+@media (max-width: 768px) {
+    .mon-bloc {
+        margin-top: 20px;
+        /* Mets une petite valeur, ou même 0, pour remonter le bloc */
+        /* padding-top: 10px; (si tu utilises du padding à la place des marges) */
+    }
+}
