@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio Bento</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+       SOMMAIRE HTML
+       1. LOADER D'ACCUEIL
+       2. MENU PLEIN ÉCRAN
+       3. HEADER PRINCIPAL
+       4. CONTENEUR DU PORTFOLIO (BENTO)
+       5. PAGINATION
+       6. PAGE CONTACT
+       7. LA POP-UP (LIGHTBOX)
+       8. RÉSEAUX SOCIAUX FIXES
+       9. SCRIPTS
+    ========================================= -->
+
+    <!-- 1. LOADER D'ACCUEIL -->
+    <div id="site-loader" class="site-loader">
+        <div class="loader-animation">
+            <div class="vector vector-left">
+                <img src="images/E1 Vector.svg" alt="">
+            </div>
+            <span class="loader-text">need</span>
+            <div class="vector vector-right">
+                <img src="images/E2 Vector.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MENU PLEIN ÉCRAN -->
+    <div id="fullscreen-menu">
+        <button id="close-menu-btn" class="close-btn">X</button>
+        <div class="logo-menu">
+            <img src="images/logo.svg" alt="Logo">
+        </div>
+        <div id="menu-grid" class="menu-grid">
+            <!-- Les carrés des pages s'afficheront ici via JS -->
+        </div>
+    </div>
+
+    <!-- 3. HEADER PRINCIPAL -->
+    <header class="site-header">
+        <button id="open-menu-btn" class="menu-btn">menu</button>
+        <div class="logo logo-btn" style="cursor: pointer;">
+            <img src="images/logo.svg" alt="Logo">
+        </div>
+        <a href="#" class="contact-link">contact</a>
+    </header>
+
+    <!-- 4. CONTENEUR DU PORTFOLIO (BENTO) -->
+    <main class="portfolio-container">
+        <button id="prev-btn" class="side-arrow-btn left-arrow hidden">➙</button>
+
+        <div id="main-portfolio-grid" class="bento-grid">
+            <!-- Les 7 projets -->
+        </div>
+
+        <button id="next-btn" class="side-arrow-btn right-arrow">➙</button>
+    </main>
+
+    <!-- 5. PAGINATION -->
+    <div id="pagination" class="pagination"></div>
+
+    <!-- 6. PAGE CONTACT -->
+    <div id="contact-page" class="contact-page hidden">
+        <header class="site-header">
+            <button id="back-to-home-btn" class="menu-btn">← retour</button>
+            <div class="logo">
+                <img src="images/logo.svg" alt="Logo">
+            </div>
+            <a href="#" class="contact-link" style="visibility: hidden;">contact</a>
+        </header>
+
+        <div class="contact-wrapper">
+            <div class="contact-card">
+
+                <!-- Colonne de gauche : Coordonnées -->
+                <div class="contact-info">
+                    <div>
+                        <h3>Parlons projet.</h3>
+                        <p class="subtitle">Une question, un projet ou envie de collaborer ? Écris-moi.</p>
+
+                        <div class="info-block">
+                            <h4>E-mail</h4>
+                            <a href="mailto:contact@tundomaine.com">contact@tundomaine.com</a>
+                        </div>
+
+                        <div class="info-block">
+                            <h4>Téléphone</h4>
+                            <a href="tel:+33600000000">+33 6 00 00 00 00</a>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Réseaux sociaux</h4>
+                        <div class="social-links">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonne de droite : Le Formulaire -->
+                <div class="contact-form-container">
+                    <h2>Need d'un designer ?</h2>
+                    <p>Dis-moi tout sur ton projet.</p>
+
+                    <form id="contact-form" onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');">
+                        <div class="form-group">
+                            <label>Votre nom</label>
+                            <input type="text" placeholder="Need Deen" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Votre email</label>
+                            <input type="email" placeholder="you@company.com" required>
+                        </div>
+
+                        <!-- Choix multiples des prestations -->
+                        <div class="form-group">
+                            <label>Quel est votre besoin ? (plusieurs choix possibles)</label>
+                            <div class="services-selection">
+                                <label class="service-pill">
+                                    <input type="checkbox" name="service" value="Stratégie">
+                                    <span>Stratégie</span>
+                                </label>
+                                <label class="service-pill">
+                                    <input type="checkbox" name="service" value="Branding">
+                                    <span>Branding</span>
+                                </label>
+                                <label class="service-pill">
+                                    <input type="checkbox" name="service" value="Webdesign">
+                                    <span>Webdesign</span>
+                                </label>
+                                <label class="service-pill">
+                                    <input type="checkbox" name="service" value="Développé">
+                                    <span>Développé</span>
+                                </label>
+                                <label class="service-pill">
+                                    <input type="checkbox" name="service" value="Mission ponctuelle">
+                                    <span>Mission ponctuelle (affiche, logo...)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Parlez-moi un peu de votre projet...</label>
+                            <textarea placeholder="Votre message..." rows="3" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. LA POP-UP (LIGHTBOX) -->
+    <div id="lightbox" class="hidden">
+        <div class="lightbox-dialog">
+            <button id="close-lightbox-btn" class="close-lightbox-btn">✕</button>
+            <div class="lightbox-body">
+                <div id="lightbox-media" class="lightbox-media"></div>
+                <div id="lightbox-description" class="lightbox-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. RÉSEAUX SOCIAUX FIXES (Bas à droite) -->
+    <div class="fixed-socials">
+        <a href="https://www.instagram.com/designbyneed/" target="_blank" rel="noopener noreferrer"
+            aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+        </a>
+        <a href="https://fr.linkedin.com/in/deen-haldane-5494bb195" target="_blank" rel="noopener noreferrer"
+            aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+        </a>
+    </div>
+
+    <!-- 9. SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="projets.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

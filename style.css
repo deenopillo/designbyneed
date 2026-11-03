@@ -1,0 +1,1298 @@
+/* =========================================
+   SOMMAIRE
+   1. RESET ET BASE
+   2. HEADER ET CENTRAGE DU LOGO
+   3. LE MENU PLEIN ÉCRAN
+   4. CONTENEUR ET GRILLE BENTO
+   5. FLÈCHES ET PAGINATION
+   6. POP-UP / LIGHTBOX
+   7. PAGE CONTACT
+   8. BOUTON EXPLICATION DU PROJET
+   9. RÉSEAUX SOCIAUX
+   10. LOADER / ÉCRAN D'ACCUEIL
+   11. EFFET TICKET À GRATTER
+   12. ANIMATIONS (KEYFRAMES)
+   13. RESPONSIVE (MOBILE)
+========================================= */
+
+
+/* --- 1. RESET ET BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FF0027;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    color: #000;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* --- 2. HEADER ET CENTRAGE DU LOGO --- */
+.site-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    margin-top: 20px;
+}
+
+.site-header .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.logo-menu {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2010;
+    cursor: pointer;
+}
+
+.logo img,
+.logo-menu img,
+.logo-menu svg {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    cursor: pointer;
+    color: #000;
+    letter-spacing: -2px;
+}
+
+.contact-link {
+    color: black;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+
+/* --- 3. LE MENU PLEIN ÉCRAN --- */
+#fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FF0027;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transform: translateY(-100%);
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#fullscreen-menu.menu-ouvert {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: black;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 90%;
+    max-width: 700px;
+    margin: 90px auto 0 auto;
+}
+
+.menu-item {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    aspect-ratio: 4 / 1;
+}
+
+.menu-item:first-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 30%;
+    background-color: #000000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.menu-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.menu-item:hover {
+    transform: scale(1.05);
+}
+
+
+/* --- 4. CONTENEUR ET GRILLE BENTO --- */
+.portfolio-container {
+    position: relative;
+    padding: 0 80px;
+    margin-top: 30px;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 2fr 1fr 1fr 1fr;
+    gap: 20px;
+    height: 75vh;
+}
+
+.bento-item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 10px rgb(108, 108, 108);
+}
+
+.bento-item:hover::after {
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 3px 3px 6px rgba(255, 255, 255, 0.9), inset -2px -2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.bento-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Positions des 7 blocs */
+.bento-pos-1 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.bento-pos-2 {
+    grid-column: 2 / 5;
+    grid-row: 1 / 2;
+    position: relative;
+}
+
+.bento-pos-3 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
+}
+
+.bento-pos-4 {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+}
+
+.bento-pos-5 {
+    grid-column: 2 / 3;
+    grid-row: 2 / 5;
+}
+
+.bento-pos-6 {
+    grid-column: 3 / 4;
+    grid-row: 2 / 5;
+}
+
+.bento-pos-7 {
+    grid-column: 4 / 5;
+    grid-row: 2 / 5;
+}
+
+
+/* --- 5. FLÈCHES ET PAGINATION --- */
+.side-arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    width: auto;
+    height: auto;
+    font-size: 36px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.left-arrow {
+    left: 20px;
+    transform: translateY(-50%) scaleX(-1);
+}
+
+.right-arrow {
+    right: 20px;
+}
+
+.side-arrow-btn:hover {
+    opacity: 0.7;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    width: 100%;
+    color: #FF0027;
+}
+
+.pagination span {
+    transition: opacity 0.3s;
+}
+
+
+/* --- 6. POP-UP / FENÊTRE PROJET STYLÉE (LIGHTBOX) --- */
+#lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#lightbox:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-dialog {
+    position: relative;
+    background: #FFFFFF;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 1080px;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+#lightbox:not(.hidden) .lightbox-dialog {
+    transform: translateY(0) scale(1);
+}
+
+.close-lightbox-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.08);
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.close-lightbox-btn:hover {
+    background: #FF0027;
+    color: #FFF;
+    transform: rotate(90deg);
+}
+
+.lightbox-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#lightbox:not(.has-text) .lightbox-body {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#lightbox:not(.has-text) .lightbox-description {
+    display: none;
+}
+
+.lightbox-media {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    overflow: hidden;
+}
+
+.lightbox-media img {
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.lightbox-description {
+    padding: 45px 40px;
+    overflow-y: auto;
+    height: 100%;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+}
+
+.lightbox-description::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lightbox-description::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.project-main-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: #000;
+}
+
+.lightbox-description h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.lightbox-description h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: #FF0027;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lightbox-description p {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 14px;
+}
+
+.lightbox-description ul,
+.lightbox-description ol {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.lightbox-description li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.lightbox-description blockquote {
+    border-left: 4px solid #FF0027;
+    padding-left: 15px;
+    margin: 20px 0;
+    font-style: italic;
+    color: #555;
+    background: #f9f9f9;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+}
+
+.lightbox-description a {
+    color: #FF0027;
+    font-weight: 700;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+.lightbox-description a:hover {
+    opacity: 0.8;
+}
+
+
+/* --- 7. PAGE CONTACT --- */
+.contact-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FF0027;
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.contact-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.contact-card {
+    background-color: #FFFFFF;
+    width: 100%;
+    max-width: 1040px;
+    max-height: 86vh;
+    border-radius: 26px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.contact-info {
+    padding: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contact-info h3 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.contact-info .subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+.info-block {
+    margin-bottom: 18px;
+}
+
+.info-block h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.info-block a {
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    background: #f0f0f0;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.contact-form-container {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-form-container h2 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: #FFFFFF;
+}
+
+.contact-form-container p {
+    font-size: 13px;
+    margin-bottom: 18px;
+    color: #CCCCCC;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #FFFFFF;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #FFFFFF;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    color: #FFFFFF;
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.services-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.service-pill input[type="checkbox"] {
+    display: none;
+}
+
+.service-pill span {
+    display: inline-block;
+    padding: 7px 13px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    user-select: none;
+    cursor: pointer;
+}
+
+.service-pill span:hover {
+    border-color: #FF0027;
+}
+
+.service-pill input[type="checkbox"]:checked+span {
+    background-color: #FF0027;
+    border-color: #FF0027;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.submit-btn {
+    background-color: #FF0027;
+    color: #FFFFFF;
+    border: none;
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.02);
+    background-color: #d00020;
+}
+
+
+/* --- 8. BOUTON EXPLICATION DU PROJET --- */
+.btn-explication {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(255, 0, 0, 0.8);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0 30px;
+    border-radius: 30px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 10;
+    width: 150px;
+    height: 40px;
+    backdrop-filter: blur(5px);
+    transition: background 0.3s ease;
+}
+
+.btn-explication:hover {
+    background: #ff0000;
+    color: #000;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: textFade 5s infinite ease-in-out;
+    line-height: 0.90 !important;
+}
+
+.vector {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 8px;
+    width: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.vector svg,
+.vector img {
+    height: 100%;
+    width: auto;
+    transform: rotate(270deg);
+}
+
+.vector-left {
+    animation: moveLeftVector 5s infinite ease-in-out;
+}
+
+.vector-right {
+    animation: moveRightVector 5s infinite ease-in-out;
+}
+
+
+/* --- 9. RÉSEAUX SOCIAUX --- */
+.fixed-socials {
+    position: fixed;
+    bottom: 25px;
+    right: 30px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 1000;
+}
+
+.fixed-socials a {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.fixed-socials a:hover {
+    transform: translateY(-3px);
+    opacity: 0.6;
+}
+
+
+/* --- 10. LOADER / ECRAN D'ACCUEIL --- */
+.site-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FF0027;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+.site-loader.hidden-loader {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-animation {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 120px;
+}
+
+.loader-text {
+    position: relative;
+    z-index: 2;
+    text-transform: lowercase;
+    letter-spacing: -4px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 44px;
+    font-weight: bold;
+    color: #FFFFFF;
+    line-height: 0.90;
+    animation: textFadeLoader 5s infinite ease-in-out;
+}
+
+.loader-animation .vector {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 32px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.loader-animation .vector svg,
+.loader-animation .vector img {
+    height: 100%;
+    width: auto;
+    transform: rotate(270deg);
+}
+
+.loader-animation .vector-left {
+    animation: moveLeftVectorLoader 5s infinite ease-in-out;
+}
+
+.loader-animation .vector-right {
+    animation: moveRightVectorLoader 5s infinite ease-in-out;
+}
+
+
+/* --- 11. EFFET TICKET À GRATTER --- */
+.scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+.scratch-prompt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 40px;
+    z-index: 20;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scratch-prompt .btn-text {
+    color: #ffffff !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    text-transform: lowercase !important;
+    letter-spacing: -1px !important;
+    text-align: center;
+    position: relative;
+    z-index: 21;
+}
+
+.scratch-prompt .vector {
+    z-index: 21;
+}
+
+.scratch-prompt .vector img,
+.scratch-prompt .vector svg {
+    filter: none;
+    scale: 1.5 !important;
+}
+
+.scratch-prompt .vector:first-child img,
+.scratch-prompt .vector:first-child svg {
+    position: relative !important;
+    left: -1px !important;
+    top: -1px !important;
+}
+
+.scratch-prompt .vector:last-child img,
+.scratch-prompt .vector:last-child svg {
+    position: relative !important;
+    left: 1px !important;
+    top: 1px !important;
+}
+
+
+/* --- 12. ANIMATIONS (KEYFRAMES) --- */
+@keyframes textFade {
+
+    0%,
+    20% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+
+    35%,
+    55% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: blur(2px);
+    }
+
+    70%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+}
+
+@keyframes moveLeftVector {
+
+    0%,
+    20% {
+        left: 12px;
+        transform: translateY(-50%);
+    }
+
+    35%,
+    55% {
+        left: 50%;
+        transform: translate(calc(-50% - 2px), calc(-50% - 3px));
+    }
+
+    70%,
+    100% {
+        left: 12px;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes moveRightVector {
+
+    0%,
+    20% {
+        right: 12px;
+        transform: translateY(-50%);
+    }
+
+    35%,
+    55% {
+        right: 50%;
+        transform: translate(calc(50% + 2px), calc(-50% + 3px));
+    }
+
+    70%,
+    100% {
+        right: 12px;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes textFadeLoader {
+
+    0%,
+    20% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+
+    35%,
+    55% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: blur(4px);
+    }
+
+    70%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+}
+
+@keyframes moveLeftVectorLoader {
+
+    0%,
+    20% {
+        left: 90px;
+        transform: translateY(-50%);
+    }
+
+    35%,
+    55% {
+        left: 50%;
+        transform: translate(calc(-50% - 8px), calc(-50% - 12px));
+    }
+
+    70%,
+    100% {
+        left: 90px;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes moveRightVectorLoader {
+
+    0%,
+    20% {
+        right: 90px;
+        transform: translateY(-50%);
+    }
+
+    35%,
+    55% {
+        right: 50%;
+        transform: translate(calc(50% + 8px), calc(-50% + 12px));
+    }
+
+    70%,
+    100% {
+        right: 90px;
+        transform: translateY(-50%);
+    }
+}
+
+
+/* --- 13. RESPONSIVE (MOBILE) --- */
+@media (max-width: 768px) {
+
+    /* Header */
+    .site-header {
+        padding: 15px 20px;
+        margin-top: 20px;
+    }
+
+    .logo-menu {
+        top: 35px;
+    }
+
+    .logo img,
+    .logo-menu img,
+    .logo-menu svg {
+        height: 45px;
+    }
+
+    .menu-btn,
+    .contact-link {
+        font-size: 18px;
+    }
+
+    /* Bento Grid */
+    .portfolio-container {
+        padding: 0 15px;
+        margin-top: 55px;
+    }
+
+    .bento-grid {
+        height: 72vh;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 8px;
+    }
+
+    .bento-pos-2 {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .bento-pos-1 {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .bento-pos-3 {
+        grid-column: 2 / 3;
+        grid-row: 2 / 4;
+    }
+
+    .bento-pos-4 {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    .bento-pos-5 {
+        grid-column: 1 / 2;
+        grid-row: 4 / 5;
+    }
+
+    .bento-pos-6 {
+        grid-column: 2 / 3;
+        grid-row: 4 / 5;
+    }
+
+    .bento-pos-7 {
+        grid-column: 1 / 3;
+        grid-row: 5 / 6;
+    }
+
+    /* Navigation Mobile Standard */
+    .side-arrow-btn {
+        position: fixed;
+        bottom: 53px !important;
+        top: auto;
+        font-size: 38px;
+        z-index: 100;
+    }
+
+    .left-arrow {
+        left: calc(50% - 40px);
+        transform: scaleX(-1);
+    }
+
+    .right-arrow {
+        right: auto;
+        left: calc(50% + 10px);
+        transform: none;
+    }
+
+    .pagination {
+        bottom: 10px !important;
+        font-size: 10px;
+    }
+
+    /* Menu plein écran */
+    #fullscreen-menu {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 0;
+        padding-bottom: 60px;
+    }
+
+    .menu-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+        width: 80%;
+        max-width: 280px;
+        margin: 110px auto 0 auto !important;
+    }
+
+    .menu-item {
+        aspect-ratio: 4 / 1;
+        width: 100%;
+    }
+
+    .menu-item:first-child {
+        width: 50%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Lightbox */
+    #lightbox {
+        padding: 15px;
+    }
+
+    #lightbox.has-text {
+        align-items: flex-end;
+    }
+
+    #lightbox.has-text .lightbox-dialog {
+        border-radius: 24px 24px 18px 18px;
+    }
+
+    #lightbox:not(.has-text) {
+        align-items: center;
+    }
+
+    #lightbox:not(.has-text) .lightbox-dialog {
+        border-radius: 16px;
+    }
+
+    .lightbox-dialog {
+        max-height: 88vh;
+    }
+
+    .lightbox-body {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+    }
+
+    .lightbox-media {
+        padding: 20px 15px;
+        min-height: 250px;
+    }
+
+    .lightbox-media img {
+        max-height: 45vh;
+    }
+
+    .lightbox-description {
+        padding: 25px 20px 35px 20px;
+        overflow-y: visible;
+    }
+
+    .project-main-title {
+        font-size: 24px;
+    }
+
+    .lightbox-description h3 {
+        font-size: 18px;
+    }
+
+    .lightbox-description p,
+    .lightbox-description li {
+        font-size: 14px;
+    }
+
+    /* Page contact */
+    .contact-card {
+        grid-template-columns: 1fr;
+        max-height: none;
+        margin: 10px 0;
+    }
+
+    .contact-info,
+    .contact-form-container {
+        padding: 25px 20px;
+    }
+
+    /* Bouton explication mobile */
+    .btn-explication {
+        width: 75px !important;
+        height: 29px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        padding: 0 15px !important;
+        font-size: 5px !important;
+    }
+
+    .btn-text {
+        white-space: nowrap !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .btn-explication .vector {
+        height: 5px !important;
+        width: 5px !important;
+    }
+
+    /* Réseaux sociaux */
+    .fixed-socials {
+        bottom: 12px;
+        right: 20px;
+        gap: 6px;
+    }
+
+    .fixed-socials svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Loader */
+    .loader-animation {
+        transform: scale(0.6);
+    }
+}
+
+/* Ajustement dynamique si la FENÊTRE est écrasée en hauteur (ex: Mac redimensionné) */
+@media (max-width: 768px) and (max-height: 750px) {
+    .side-arrow-btn {
+        bottom: 30px !important;
+        font-size: 30px;
+    }
+
+    .pagination {
+        bottom: 4px !important;
+    }
+}
