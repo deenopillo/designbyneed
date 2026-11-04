@@ -216,38 +216,33 @@ function ouvrirPopup(projet, afficherTexte = false) {
     // 2. Traiter la description & le Markdown
     if (afficherTexte && (projet.description || projet.titre)) {
         lightbox.classList.add('has-text');
-
         let contentHtml = '';
-
-        // Titre principal
-        if (projet.titre) {
-            contentHtml += `<h2 class="project-main-title">${projet.titre}</h2>`;
-        }
-
-        // Rendu Markdown via Marked.js
+        if (projet.titre) contentHtml += `<h2 class="project-main-title">${projet.titre}</h2>`;
         if (projet.description) {
-            if (typeof marked !== 'undefined') {
-                contentHtml += marked.parse(projet.description);
-            } else {
-                // Secours si Marked.js n'a pas pu se charger
-                contentHtml += `<p>${projet.description.replace(/\n/g, '<br>')}</p>`;
-            }
+            if (typeof marked !== 'undefined') contentHtml += marked.parse(projet.description);
+            else contentHtml += `<p>${projet.description.replace(/\n/g, '<br>')}</p>`;
         }
-
         lightboxDesc.innerHTML = contentHtml;
     } else {
         lightbox.classList.remove('has-text');
         lightboxDesc.innerHTML = '';
     }
 
-    // 3. Afficher la popup
+    // 3. Afficher la popup et bloquer le fond
     lightbox.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Bloque le scroll en arrière-plan
+    document.body.style.overflow = 'hidden';
+
+    // NOUVEAU : On force les barres du téléphone en noir pour fusionner avec le flou
+    changerCouleurNavigateur('#000000');
 }
 
 function fermerPopup() {
     lightbox.classList.add('hidden');
     document.body.style.overflow = ''; // Rétablit le scroll
+
+    // NOUVEAU : On remet la couleur blanche (ou celle de la page) aux barres du téléphone
+    const couleurPage = couleursPages[currentPage] || '#FFFFFF';
+    changerCouleurNavigateur(couleurPage);
 }
 
 // Clic sur la croix de fermeture

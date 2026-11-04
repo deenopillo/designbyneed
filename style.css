@@ -1,6 +1,6 @@
 /* =========================================
    SOMMAIRE
-   1. RESET ET BASE
+1. RESET ET BASE
    2. HEADER ET CENTRAGE DU LOGO
    3. LE MENU PLEIN ÉCRAN
    4. CONTENEUR ET GRILLE BENTO
@@ -1246,6 +1246,8 @@ body {
 
     #lightbox.has-text .lightbox-dialog {
         border-radius: 20px;
+        overflow: hidden;
+        /* Empêche l'image de dépasser des bords arrondis */
     }
 
     #lightbox:not(.has-text) {
@@ -1274,14 +1276,17 @@ body {
     }
 
     .lightbox-media {
-        padding: 20px 15px 10px 15px;
+        /* 55px en haut pour laisser la place à la croix de fermeture */
+        padding: 55px 20px 10px 20px;
         min-height: auto;
-        /* Supprime l'ancienne valeur qui forçait la hauteur */
+        background: #FFFFFF;
     }
 
     .lightbox-media img {
-        max-height: 35dvh;
-        /* L'image prend moins de place pour laisser apparaître le texte */
+        max-height: 28dvh;
+        width: 100%;
+        object-fit: contain;
+        /* Force l'image à garder ses proportions sans être rognée */
     }
 
     .lightbox-description {
