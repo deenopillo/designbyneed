@@ -29,6 +29,9 @@ body {
     color: #000;
     overflow-x: hidden;
     transition: background-color 0.5s ease;
+    min-height: 100vh;
+    min-height: 100dvh;
+    /* Couvre 100% de la hauteur réelle du téléphone */
 }
 
 .hidden {
@@ -98,6 +101,8 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
+    /* Utilise la hauteur dynamique mobile */
     background-color: #FF0027;
     z-index: 2000;
     display: flex;
@@ -106,6 +111,10 @@ body {
     justify-content: flex-start;
     transform: translateY(-100%);
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* Marge de sécurité pour ne pas coller le contenu contre l'encoche du haut/bas */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 #fullscreen-menu.menu-ouvert {
@@ -537,11 +546,16 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
+    /* Utilise la hauteur dynamique mobile */
     background-color: #FF0027;
     z-index: 1500;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .contact-wrapper {
@@ -826,6 +840,8 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
+    /* Utilise la hauteur dynamique mobile */
     background-color: #FF0027;
     z-index: 9999;
     display: flex;
