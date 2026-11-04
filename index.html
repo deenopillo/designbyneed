@@ -65,17 +65,19 @@
 
     <!-- 4. CONTENEUR DU PORTFOLIO (BENTO) -->
     <main class="portfolio-container">
-        <button id="prev-btn" class="side-arrow-btn left-arrow hidden">➙</button>
-
         <div id="main-portfolio-grid" class="bento-grid">
             <!-- Les 7 projets -->
         </div>
-
-        <button id="next-btn" class="side-arrow-btn right-arrow">➙</button>
     </main>
 
     <!-- 5. PAGINATION -->
-    <div id="pagination" class="pagination"></div>
+    <div class="pagination-wrapper">
+        <div class="pagination-pill">
+            <button id="prev-btn" class="arrow-btn hidden">⟨</button>
+            <div id="pagination" class="page-numbers"></div>
+            <button id="next-btn" class="arrow-btn">⟩</button>
+        </div>
+    </div>
 
     <!-- 6. PAGE CONTACT -->
     <div id="contact-page" class="contact-page hidden">

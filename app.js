@@ -136,23 +136,30 @@ function afficherProjets() {
     afficherPagination();
 }
 
-// La fonction qui génère les numéros "1 2 3..."
+// La fonction qui génère les numéros intelligemment (avec les "...")
 function afficherPagination() {
     const totalPages = Math.ceil(projets.length / itemsPerPage);
     let pagesHtml = '';
 
     for (let i = 0; i < totalPages; i++) {
-        if (i === currentPage) {
-            // Page actuelle : en évidence
-            pagesHtml += `<span>${i + 1} </span>`;
-        } else {
-            // Autres pages : transparentes et cliquables
-            pagesHtml += `<span style="opacity: 0.5; cursor:pointer;" onclick="allerAPage(${i})">${i + 1} </span>`;
+        // Condition pour n'afficher que : la 1ère page, la dernière, et les pages autour de la page active
+        if (i === 0 || i === totalPages - 1 || (i >= currentPage - 1 && i <= currentPage + 1)) {
+            if (i === currentPage) {
+                // Page actuelle : en évidence avec la couleur
+                pagesHtml += `<span class="page-num active">${i + 1}</span>`;
+            } else {
+                // Autres pages : cliquables
+                pagesHtml += `<span class="page-num" onclick="allerAPage(${i})">${i + 1}</span>`;
+            }
+        }
+        // Si on est juste à côté des pages visibles, on met les points de suspension
+        else if (i === currentPage - 2 || i === currentPage + 2) {
+            pagesHtml += `<span class="page-dots">...</span>`;
         }
     }
 
-    pagesHtml += '<span style="opacity: 0.5;">...</span>';
-    pagination.innerHTML = pagesHtml;
+    // Le conteneur s'appelle toujours 'pagination' dans le JS
+    document.getElementById('pagination').innerHTML = pagesHtml;
 }
 
 // Fonction pour la navigation via les numéros
