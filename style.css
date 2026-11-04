@@ -353,6 +353,8 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
+    /* <-- AJOUT : Hauteur dynamique */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -361,6 +363,10 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 20px;
+    padding-top: env(safe-area-inset-top);
+    /* <-- AJOUT : Marge encoche */
+    padding-bottom: env(safe-area-inset-bottom);
+    /* <-- AJOUT : Marge barre bas */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1226,17 +1232,20 @@ body {
         margin-bottom: 0;
     }
 
-    /* Lightbox */
+    /* Lightbox Mobile */
     #lightbox {
         padding: 15px;
+        /* On ajoute la hauteur de la barre de sécurité au padding du bas */
+        padding-bottom: calc(15px + env(safe-area-inset-bottom));
     }
 
     #lightbox.has-text {
-        align-items: flex-end;
+        align-items: center;
+        /* On centre au lieu de coller en bas */
     }
 
     #lightbox.has-text .lightbox-dialog {
-        border-radius: 24px 24px 18px 18px;
+        border-radius: 20px;
     }
 
     #lightbox:not(.has-text) {
@@ -1248,25 +1257,35 @@ body {
     }
 
     .lightbox-dialog {
-        max-height: 88vh;
+        max-height: 82dvh;
+        /* <-- Modifié : On laisse de la marge pour les barres Safari */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .lightbox-body {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
+        /* Active le scroll interne */
+        -webkit-overflow-scrolling: touch;
+        /* Rend le scroll fluide sur iPhone */
     }
 
     .lightbox-media {
-        padding: 20px 15px;
-        min-height: 250px;
+        padding: 20px 15px 10px 15px;
+        min-height: auto;
+        /* Supprime l'ancienne valeur qui forçait la hauteur */
     }
 
     .lightbox-media img {
-        max-height: 45vh;
+        max-height: 35dvh;
+        /* L'image prend moins de place pour laisser apparaître le texte */
     }
 
     .lightbox-description {
-        padding: 25px 20px 35px 20px;
+        padding: 15px 20px 30px 20px;
         overflow-y: visible;
     }
 
