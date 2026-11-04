@@ -1,6 +1,6 @@
 /* =========================================
    SOMMAIRE
-   1. SÉLECTION DES ÉLÉMENTS DE LA PAGE
+   1. VARIABLES GLOBALES ET SÉLECTION
    2. GESTION DE LA NAVIGATION ET DES PROJETS
    3. GESTION DE LA POP-UP (LIGHTBOX)
    4. LANCEMENT (ONLOAD)
@@ -10,6 +10,26 @@
    8. GESTION DU LOADER (ÉCRAN D'ACCUEIL)
    9. SYSTÈME DE TICKET À GRATTER
 ========================================= */
+
+// =========================================
+// VARIABLES GLOBALES
+// =========================================
+const couleursPages = [
+    '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF',
+    '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'
+];
+
+let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
+const itemsPerPage = 7; // Les 7 blocs du design
+
+// Fonction utilitaire pour mettre à jour la barre mobile
+function changerCouleurNavigateur(couleur) {
+    const metaTheme = document.getElementById('theme-color-meta');
+    if (metaTheme) {
+        metaTheme.setAttribute('content', couleur);
+    }
+}
+
 
 // --- 1. SÉLECTION DE TOUS LES ÉLÉMENTS DE LA PAGE ---
 const mainGrid = document.getElementById('main-portfolio-grid');
@@ -25,14 +45,13 @@ const lightboxDesc = document.getElementById('lightbox-description');
 
 
 // --- 2. GESTION DE LA NAVIGATION ET DES PROJETS ---
-let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
-const itemsPerPage = 7; // Les 7 blocs du design
-
 // La fonction qui génère les blocs
 function afficherProjets() {
-    // Les couleurs pour tes pages
-    const couleursPages = ['#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
-    document.body.style.backgroundColor = couleursPages[currentPage] || '#FFFFFF';
+    const couleurActuelle = couleursPages[currentPage] || '#FFFFFF';
+
+    // Application de la couleur au body et au navigateur
+    document.body.style.backgroundColor = couleurActuelle;
+    changerCouleurNavigateur(couleurActuelle);
 
     mainGrid.innerHTML = '';
 
@@ -296,10 +315,15 @@ function genererMenu() {
 function ouvrirMenu() {
     genererMenu();
     fullscreenMenu.classList.add('menu-ouvert');
+    // Passe le haut/bas du téléphone en rouge quand le menu s'ouvre
+    changerCouleurNavigateur('#FF0027');
 }
 
 function fermerMenu() {
     fullscreenMenu.classList.remove('menu-ouvert');
+    // Remet la couleur exacte de la page courante lors de la fermeture
+    const couleurPage = couleursPages[currentPage] || '#FFFFFF';
+    changerCouleurNavigateur(couleurPage);
 }
 
 openMenuBtn.addEventListener('click', ouvrirMenu);
@@ -315,10 +339,15 @@ if (contactLink && contactPage && backToHomeBtn) {
     contactLink.addEventListener('click', (e) => {
         e.preventDefault();
         contactPage.classList.remove('hidden');
+        // Passe le haut/bas du téléphone en rouge pour la page contact
+        changerCouleurNavigateur('#FF0027');
     });
 
     backToHomeBtn.addEventListener('click', () => {
         contactPage.classList.add('hidden');
+        // Remet la couleur exacte de la page courante lors de la fermeture
+        const couleurPage = couleursPages[currentPage] || '#FFFFFF';
+        changerCouleurNavigateur(couleurPage);
     });
 }
 
@@ -333,7 +362,7 @@ logos.forEach(logo => {
         currentPage = 0;
         afficherProjets();
 
-        if (contactPage) {
+        if (contactPage && !contactPage.classList.contains('hidden')) {
             contactPage.classList.add('hidden');
         }
 
