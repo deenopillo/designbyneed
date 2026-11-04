@@ -1162,7 +1162,7 @@ body {
 
     /* Nouvelle pagination mobile */
     .pagination-wrapper {
-        bottom: 30px;
+        bottom: 10px;
     }
 
     .pagination-pill {
