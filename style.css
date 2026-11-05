@@ -387,19 +387,19 @@ body {
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    /* <-- AJOUT : Hauteur dynamique */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2500;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+
+    /* 👇 LA MODIFICATION EST ICI : Un fond plus sombre et transparent + un vrai flou global 👇 */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
     padding: 20px;
     padding-top: env(safe-area-inset-top);
-    /* <-- AJOUT : Marge encoche */
     padding-bottom: env(safe-area-inset-bottom);
-    /* <-- AJOUT : Marge barre bas */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
