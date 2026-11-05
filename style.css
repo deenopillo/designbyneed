@@ -137,9 +137,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+
+    /* On remet uniquement le transform pour l'animation */
     transform: translateY(-100%);
-    visibility: hidden;
-    pointer-events: none;
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     /* Marge de sécurité pour ne pas coller le contenu contre l'encoche du haut/bas */
