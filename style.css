@@ -35,27 +35,31 @@
 
 
 /* --- 1. RESET ET BASE --- */
-html,
+html {
+    background-color: #FFFFFF !important;
+    /* Empêche le fond gris lors du "tirage" vers le haut/bas sur iPhone */
+    overscroll-behavior: none;
+}
+
 body {
     background-color: #FFFFFF !important;
-    /* Force le fond par défaut en blanc pour éviter les bavures Safari */
-    overscroll-behavior: none;
-    /* Désactive le rebond élastique de Safari */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
+    /* Le blanc par défaut, sans flash rouge */
     font-family: 'Bricolage Grotesque', sans-serif;
     color: #000;
     overflow-x: hidden;
     transition: background-color 0.5s ease;
+
+    /* Les 3 lignes magiques pour couvrir tout l'écran de l'iPhone, barres comprises */
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ⚠️ ATTENTION ICI : C'EST UNE ÉTOILE (*), PAS UN TIRET (-) ! */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .hidden {
