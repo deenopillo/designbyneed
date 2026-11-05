@@ -371,29 +371,38 @@ function initScratchCard(canvas, img, container, promptDiv) {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     let isDrawing = false;
 
-    canvas.width = container.offsetWidth;
-    canvas.height = container.offsetHeight;
+    // ASTUCE : On attend 50ms pour laisser le temps au navigateur de dessiner 
+    // la grille et de donner une vraie largeur/hauteur au container
+    setTimeout(() => {
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
 
-    // 1. On charge TA vraie photo de texture (pebbled glass)
-    const glassTexture = new Image();
+        // 1. FALLBACK DE SÉCURITÉ : On met un fond gris argenté.
+        // Comme ça, même si l'image "texture-verre.jpg" n'existe pas, on a quand même un ticket à gratter !
+        ctx.fillStyle = '#C0C0C0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // ⚠️ METS LE BON NOM DE TON IMAGE DE TEXTURE ICI :
-    glassTexture.src = 'images/texture-verre.jpg';
+        // 2. On charge TA vraie photo de texture
+        const glassTexture = new Image();
+        glassTexture.src = 'images/texture-verre.jpg';
 
-    // SI L'IMAGE CHARGE BIEN :
-    glassTexture.onload = () => {
-        const scale = Math.max(canvas.width / glassTexture.width, canvas.height / glassTexture.height);
-        const x = (canvas.width / 2) - (glassTexture.width / 2) * scale;
-        const y = (canvas.height / 2) - (glassTexture.height / 2) * scale;
+        glassTexture.onload = () => {
+            // L'image est trouvée, on la dessine par-dessus le gris
+            const scale = Math.max(canvas.width / glassTexture.width, canvas.height / glassTexture.height);
+            const x = (canvas.width / 2) - (glassTexture.width / 2) * scale;
+            const y = (canvas.height / 2) - (glassTexture.height / 2) * scale;
 
-        // On réduit l'opacité à 80% (0.8) avant de dessiner l'image
-        ctx.globalAlpha = 0.9;
+            ctx.globalAlpha = 0.9;
+            ctx.globalCompositeOperation = 'source-over'; // S'assure qu'on dessine par dessus
+            ctx.drawImage(glassTexture, x, y, glassTexture.width * scale, glassTexture.height * scale);
+            ctx.globalAlpha = 1.0;
+        };
 
-        ctx.drawImage(glassTexture, x, y, glassTexture.width * scale, glassTexture.height * scale);
+        glassTexture.onerror = () => {
+            console.warn("L'image texture-verre.jpg n'a pas été trouvée, le ticket reste gris argenté.");
+        };
 
-        // On remet l'opacité à 100% (1.0) pour que le pinceau de grattage fonctionne normalement
-        ctx.globalAlpha = 1.0;
-    };
+    }, 50); // Le fameux délai de 50 millisecondes
 
     // --- LE PINCEAU POUR GRATTER ---
     function getMousePos(e) {
@@ -407,12 +416,13 @@ function initScratchCard(canvas, img, container, promptDiv) {
         if (!isDrawing) return;
         e.preventDefault();
 
+        // Fait disparaître le texte "grattez-moi"
         if (promptDiv.style.opacity !== '0') {
             promptDiv.style.opacity = '0';
         }
 
         const pos = getMousePos(e);
-        ctx.globalCompositeOperation = 'destination-out';
+        ctx.globalCompositeOperation = 'destination-out'; // C'est ça qui "efface"
 
         const gradient = ctx.createRadialGradient(pos.x, pos.y, 10, pos.x, pos.y, 65);
         gradient.addColorStop(0, 'rgba(0,0,0,1)');
@@ -424,11 +434,13 @@ function initScratchCard(canvas, img, container, promptDiv) {
         ctx.fill();
     }
 
+    // Événements souris
     canvas.addEventListener('mousedown', () => { isDrawing = true; });
     canvas.addEventListener('mouseup', () => { isDrawing = false; });
     canvas.addEventListener('mousemove', scratch);
     canvas.addEventListener('mouseleave', () => { isDrawing = false; });
 
+    // Événements tactiles (téléphone)
     canvas.addEventListener('touchstart', (e) => { isDrawing = true; }, { passive: false });
     canvas.addEventListener('touchend', () => { isDrawing = false; });
     canvas.addEventListener('touchmove', scratch, { passive: false });
