@@ -598,7 +598,7 @@ if (btnMagic) {
         btnLinkedin.addEventListener('click', () => {
             assistiveMenu.classList.remove('active');
             assistiveOverlay.classList.remove('active');
-            window.open('https://fr.linkedin.com/in/deen-haldane-5494bb195', '_blank');
+            window.open('https://www.linkedin.com/in/deen-haldane-5494bb195?utm_source=share_via&utm_content=profile&utm_medium=member_ios', '_blank');
         });
     }
 
