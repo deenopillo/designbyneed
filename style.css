@@ -392,7 +392,7 @@ body {
     align-items: center;
     z-index: 2500;
 
-    /* 👇 LA MODIFICATION EST ICI : Un fond plus sombre et transparent + un vrai flou global 👇 */
+    /* C'est ce fond et ce flou qui vont capturer le haut et le bas de Safari */
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
