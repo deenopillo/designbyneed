@@ -23,12 +23,28 @@ const couleursPages = [
 let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
 const itemsPerPage = 7; // Les 7 blocs du design
 
-// Fonction utilitaire pour mettre à jour TOUTES les barres mobiles Safari
+// Fonction utilitaire pour forcer la couleur de Safari et contrer le cache
 function changerCouleurNavigateur(couleur) {
-    const metaThemes = document.querySelectorAll('meta[name="theme-color"]');
-    metaThemes.forEach(meta => {
-        meta.setAttribute('content', couleur);
-    });
+    // 1. Trouve ou crée la balise meta theme-color
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        document.head.appendChild(metaTheme);
+    }
+    metaTheme.setAttribute('content', couleur);
+
+    // 2. Nettoie les balises en double qui créent des conflits sur Safari
+    const toutesLesMetas = document.querySelectorAll('meta[name="theme-color"]');
+    if (toutesLesMetas.length > 1) {
+        toutesLesMetas.forEach((meta, index) => {
+            if (index > 0) meta.remove(); // On ne garde que la première
+        });
+    }
+
+    // 3. ANTI-CACHE : Force la couleur de fond directement sur la page !
+    document.documentElement.style.setProperty('background-color', couleur, 'important');
+    document.body.style.setProperty('background-color', couleur, 'important');
 }
 
 

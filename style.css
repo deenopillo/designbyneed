@@ -138,6 +138,8 @@ body {
     align-items: center;
     justify-content: flex-start;
     transform: translateY(-100%);
+    visibility: hidden;
+    pointer-events: none;
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     /* Marge de sécurité pour ne pas coller le contenu contre l'encoche du haut/bas */
@@ -1001,6 +1003,7 @@ body {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
 }
 
 .loader-animation {
