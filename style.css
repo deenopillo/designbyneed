@@ -1102,6 +1102,41 @@ body {
 
 
 /* --- 12. ANIMATIONS (KEYFRAMES) --- */
+
+/* --- RESTAURATION DE L'ANIMATION DES LOGOS (TICKET À GRATTER) --- */
+.btn-text {
+    position: relative;
+    z-index: 2;
+    animation: textFade 5s infinite ease-in-out;
+}
+
+.vector {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 8px;
+    width: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.vector svg,
+.vector img {
+    height: 100%;
+    width: auto;
+    transform: rotate(270deg);
+}
+
+.vector-left {
+    animation: moveLeftVector 5s infinite ease-in-out;
+}
+
+.vector-right {
+    animation: moveRightVector 5s infinite ease-in-out;
+}
+
 @keyframes textFade {
 
     0%,
