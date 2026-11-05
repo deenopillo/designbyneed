@@ -861,12 +861,12 @@ body {
     background-color: #FFFFFF;
 
     /* Intégration de ton logo (Ajuste le chemin vers ton image si besoin : images/Logo.png ou Logo.png) */
-    background-image: url('images/Logo.png');
+    background-image: url('images/Logo.svg');
     background-position: center;
     background-repeat: no-repeat;
 
     /* Taille du logo à l'intérieur du cercle (ex: 65% pour laisser une petite marge interne) */
-    background-size: 65%;
+    background-size: 25%;
 
     /* Contour et ombre */
     border: 2px solid rgba(255, 255, 255, 0.8);
