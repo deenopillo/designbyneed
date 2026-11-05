@@ -24,7 +24,7 @@ const itemsPerPage = 7; // Les 7 blocs du design
 
 // Fonction utilitaire pour mettre à jour la barre mobile
 function changerCouleurNavigateur(couleur) {
-    const metaTheme = document.getElementById('theme-color-meta');
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) {
         metaTheme.setAttribute('content', couleur);
     }

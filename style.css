@@ -17,6 +17,10 @@
 
 
 /* --- 1. RESET ET BASE --- */
+html {
+    background-color: #FFFFFF;
+}
+
 * {
     margin: 0;
     padding: 0;
