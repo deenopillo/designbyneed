@@ -985,7 +985,7 @@ body {
     height: 100vh;
     height: 100dvh;
     /* Utilise la hauteur dynamique mobile */
-    background-color: #FF0027;
+    background-color: #FFFFFF;
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -1017,7 +1017,7 @@ body {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 44px;
     font-weight: bold;
-    color: #FFFFFF;
+    color: #000000;
     line-height: 0.90;
     animation: textFadeLoader 5s infinite ease-in-out;
 }

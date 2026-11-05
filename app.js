@@ -23,7 +23,7 @@ const couleursPages = [
 let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
 const itemsPerPage = 7; // Les 7 blocs du design
 
-// Fonction utilitaire pour mettre à jour TOUTES les barres mobiles
+// Fonction utilitaire pour mettre à jour TOUTES les barres mobiles Safari
 function changerCouleurNavigateur(couleur) {
     const metaThemes = document.querySelectorAll('meta[name="theme-color"]');
     metaThemes.forEach(meta => {
