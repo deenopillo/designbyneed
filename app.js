@@ -581,4 +581,25 @@ if (btnMagic) {
             });
         }
     });
+
+    // Action pour ouvrir Instagram
+    const btnInsta = document.getElementById('ast-insta');
+    if (btnInsta) {
+        btnInsta.addEventListener('click', () => {
+            assistiveMenu.classList.remove('active');
+            assistiveOverlay.classList.remove('active');
+            window.open('https://www.instagram.com/designbyneed/', '_blank');
+        });
+    }
+
+    // Action pour ouvrir LinkedIn
+    const btnLinkedin = document.getElementById('ast-linkedin');
+    if (btnLinkedin) {
+        btnLinkedin.addEventListener('click', () => {
+            assistiveMenu.classList.remove('active');
+            assistiveOverlay.classList.remove('active');
+            window.open('https://fr.linkedin.com/in/deen-haldane-5494bb195', '_blank');
+        });
+    }
+
 }
