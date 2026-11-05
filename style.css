@@ -851,14 +851,26 @@ body {
     }
 }
 
-/* Le cœur blanc du bouton */
+/* Le cœur du bouton avec le Logo */
 .assistive-btn .assistive-core {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    border: 3px solid #ffffff66;
-    background: #ffffffd9;
-    box-shadow: 0 0 10px #FF0027;
+
+    /* Fond du cercle (blanc ou transparent selon tes préférences) */
+    background-color: #FFFFFF;
+
+    /* Intégration de ton logo (Ajuste le chemin vers ton image si besoin : images/Logo.png ou Logo.png) */
+    background-image: url('images/Logo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Taille du logo à l'intérieur du cercle (ex: 65% pour laisser une petite marge interne) */
+    background-size: 65%;
+
+    /* Contour et ombre */
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 /* Fond sombre quand le menu est ouvert */
