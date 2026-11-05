@@ -1,6 +1,6 @@
 /* =========================================
    SOMMAIRE
-   1. VARIABLES GLOBALES ET SÉLECTION
+1. VARIABLES GLOBALES ET SÉLECTION
    2. GESTION DE LA NAVIGATION ET DES PROJETS
    3. GESTION DE LA POP-UP (LIGHTBOX)
    4. LANCEMENT (ONLOAD)
@@ -9,6 +9,7 @@
    7. GESTION DU CLIC SUR LE LOGO
    8. GESTION DU LOADER (ÉCRAN D'ACCUEIL)
    9. SYSTÈME DE TICKET À GRATTER
+   10. SYSTÈME ASSISTIVE TOUCH (iOS)
 ========================================= */
 
 // =========================================
@@ -71,6 +72,10 @@ function afficherProjets() {
         img.src = projet.mediaSrc;
         item.appendChild(img);
 
+        // ⚠️ CORRECTION ICI : On insère l'élément dans la page AVANT de créer le canvas
+        // pour que le script puisse calculer sa largeur et sa hauteur correctement !
+        mainGrid.appendChild(item);
+
         // --- EFFET TICKET À GRATTER (SUR LA POS 4 / Index 3) ---
         if (index === 3) {
             // Le Canvas
@@ -108,38 +113,16 @@ function afficherProjets() {
             }
         }
 
-        // --- AJOUT DU BOUTON SUR LA BENTO POS 2 UNIQUEMENT (Index 1) ---
-        if (index === 1) {
-            const btnExplication = document.createElement('button');
-            btnExplication.classList.add('btn-explication');
-
-            // On met tes images vectorielles SVG
-            btnExplication.innerHTML = `
-                <div class="vector vector-left">
-                    <img src="images/E1 Vector.svg" alt="">
-                </div>
-                
-                <span class="btn-text">explication<br> du projet</span>
-                
-                <div class="vector vector-right">
-                    <img src="images/E2 Vector.svg" alt="">
-                </div>
-            `;
-
-            // Le clic sur le bouton ouvre la popup AVEC la description (true)
-            btnExplication.addEventListener('click', (e) => {
-                e.stopPropagation();
-                ouvrirPopup(projet, true);
-            });
-
-            item.appendChild(btnExplication);
-        }
-
-        mainGrid.appendChild(item);
-
         // Le clic sur l'image ouvre la popup SANS le texte (false)
         item.addEventListener('click', () => ouvrirPopup(projet, false));
     });
+
+    // --- GESTION DE L'AFFICHAGE DU BOUTON iOS ---
+    // Affiche le bouton Apple sur toutes les pages
+    const assistiveBtn = document.getElementById('assistive-btn');
+    if (assistiveBtn) {
+        assistiveBtn.classList.remove('hidden');
+    }
 
     // Cacher/Afficher la flèche gauche
     if (currentPage === 0) {
@@ -450,4 +433,124 @@ function initScratchCard(canvas, img, container, promptDiv) {
     canvas.addEventListener('touchend', () => { isDrawing = false; });
     canvas.addEventListener('touchmove', scratch, { passive: false });
     canvas.addEventListener('touchcancel', () => { isDrawing = false; });
+}
+
+// --- 10. GESTION DU SYSTÈME ASSISTIVE TOUCH (iOS) ---
+const assistiveBtn = document.getElementById('assistive-btn');
+const assistiveMenu = document.getElementById('assistive-menu');
+const assistiveOverlay = document.getElementById('assistive-overlay');
+const audioPlayer = document.getElementById('projet-audio');
+
+// 1. Logique de Déplacement (Drag & Drop)
+let isDragging = false;
+let hasDragged = false; // Pour différencier un clic d'un glissement
+let startX, startY;
+
+function startDrag(e) {
+    if (!assistiveBtn) return;
+    isDragging = true;
+    hasDragged = false;
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+    startX = clientX - assistiveBtn.getBoundingClientRect().left;
+    startY = clientY - assistiveBtn.getBoundingClientRect().top;
+}
+
+function moveDrag(e) {
+    if (!isDragging || !assistiveBtn) return;
+    hasDragged = true; // S'il bouge, ce n'est plus un simple clic
+    e.preventDefault(); // Empêche le scroll sur mobile
+
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+    assistiveBtn.style.left = `${clientX - startX}px`;
+    assistiveBtn.style.top = `${clientY - startY}px`;
+    assistiveBtn.style.bottom = 'auto'; // Désactive le CSS par défaut
+    assistiveBtn.style.right = 'auto';
+}
+
+function endDrag() {
+    isDragging = false;
+}
+
+if (assistiveBtn) {
+    // Événements Souris
+    assistiveBtn.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('mouseup', endDrag);
+
+    // Événements Tactiles (Mobile)
+    assistiveBtn.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('touchmove', moveDrag, { passive: false });
+    document.addEventListener('touchend', endDrag);
+
+    // 2. Ouverture / Fermeture du Menu
+    assistiveBtn.addEventListener('click', () => {
+        if (!hasDragged) { // Ouvre uniquement si on a juste cliqué, pas glissé
+            assistiveMenu.classList.add('active');
+            assistiveOverlay.classList.add('active');
+        }
+    });
+}
+
+if (assistiveOverlay) {
+    assistiveOverlay.addEventListener('click', () => {
+        assistiveMenu.classList.remove('active');
+        assistiveOverlay.classList.remove('active');
+    });
+}
+
+// 3. Actions des boutons du menu
+const btnExplication = document.getElementById('ast-explication');
+if (btnExplication) {
+    btnExplication.addEventListener('click', () => {
+        assistiveMenu.classList.remove('active');
+        assistiveOverlay.classList.remove('active');
+
+        // On récupère le bon projet (ici index 1 pour "Need Studio" comme ton ancien bouton)
+        const projetInfo = projets[(currentPage * itemsPerPage) + 1];
+        if (projetInfo) ouvrirPopup(projetInfo, true);
+    });
+}
+
+const btnMusic = document.getElementById('ast-music');
+if (btnMusic && audioPlayer) {
+    btnMusic.addEventListener('click', () => {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            document.querySelector('#ast-music span:not(.icon)').innerText = "Pause";
+        } else {
+            audioPlayer.pause();
+            document.querySelector('#ast-music span:not(.icon)').innerText = "Musique";
+        }
+    });
+}
+
+const btnShare = document.getElementById('ast-share');
+if (btnShare) {
+    btnShare.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            const textSpan = document.querySelector('#ast-share span:not(.icon)');
+            textSpan.innerText = "Copié !";
+            setTimeout(() => textSpan.innerText = "Partager", 2000);
+        });
+    });
+}
+
+const btnMagic = document.getElementById('ast-magic');
+if (btnMagic) {
+    btnMagic.addEventListener('click', () => {
+        assistiveMenu.classList.remove('active');
+        assistiveOverlay.classList.remove('active');
+        if (typeof confetti !== "undefined") {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FF0027', '#000000', '#FFFFFF']
+            });
+        }
+    });
 }

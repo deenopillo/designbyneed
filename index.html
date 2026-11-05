@@ -207,7 +207,44 @@
         </a>
     </div>
 
-    <!-- 9. SCRIPTS -->
+    <!-- =========================================
+         8. SYSTÈME ASSISTIVE TOUCH (Bouton iOS)
+    ========================================= -->
+    <div id="assistive-btn" class="assistive-btn">
+        <div class="assistive-core"></div>
+    </div>
+
+    <div id="assistive-overlay" class="assistive-overlay"></div>
+
+    <div id="assistive-menu" class="assistive-menu">
+        <div class="assistive-grid">
+            <div class="assistive-item" id="ast-explication">
+                <span class="icon">📄</span>
+                <span>Projet</span>
+            </div>
+            <div class="assistive-item" id="ast-music">
+                <span class="icon">🎵</span>
+                <span>Musique</span>
+            </div>
+            <div class="assistive-item" id="ast-share">
+                <span class="icon">🔗</span>
+                <span>Partager</span>
+            </div>
+            <div class="assistive-item" id="ast-magic">
+                <span class="icon">✨</span>
+                <span>Magie</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="projet-audio" src="ta-musique.mp3" loop></audio>
+
+
+    <!-- =========================================
+         9. SCRIPTS (TOUJOURS EN TOUT DERNIER !)
+    ========================================= -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="projets.js"></script>
     <script src="app.js"></script>

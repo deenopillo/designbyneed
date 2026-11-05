@@ -16,9 +16,31 @@
 ========================================= */
 
 
+/* =========================================
+   SOMMAIRE
+1. RESET ET BASE
+   2. HEADER ET CENTRAGE DU LOGO
+   3. LE MENU PLEIN ÉCRAN
+   4. CONTENEUR ET GRILLE BENTO
+   5. FLÈCHES ET PAGINATION
+   6. POP-UP / LIGHTBOX
+   7. PAGE CONTACT
+   8. SYSTÈME ASSISTIVE TOUCH (STYLE iOS)
+   9. RÉSEAUX SOCIAUX
+   10. LOADER / ÉCRAN D'ACCUEIL
+   11. EFFET TICKET À GRATTER
+   12. ANIMATIONS (KEYFRAMES)
+   13. RESPONSIVE (MOBILE)
+========================================= */
+
+
 /* --- 1. RESET ET BASE --- */
-html {
-    background-color: #FFFFFF;
+html,
+body {
+    background-color: #FFFFFF !important;
+    /* Force le fond par défaut en blanc pour éviter les bavures Safari */
+    overscroll-behavior: none;
+    /* Désactive le rebond élastique de Safari */
 }
 
 * {
@@ -28,14 +50,12 @@ html {
 }
 
 body {
-    background-color: #FF0027;
     font-family: 'Bricolage Grotesque', sans-serif;
     color: #000;
     overflow-x: hidden;
     transition: background-color 0.5s ease;
     min-height: 100vh;
     min-height: 100dvh;
-    /* Couvre 100% de la hauteur réelle du téléphone */
 }
 
 .hidden {
@@ -750,71 +770,172 @@ body {
 }
 
 
-/* --- 8. BOUTON EXPLICATION DU PROJET --- */
-.btn-explication {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    background: rgba(255, 0, 0, 0.8);
-    color: #FFFFFF;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0 30px;
-    border-radius: 30px;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 11px;
-    font-weight: bold;
-    cursor: pointer;
+/* --- 8. SYSTÈME ASSISTIVE TOUCH (STYLE iOS) --- */
+
+/* Le bouton flottant (Placé en haut à droite par défaut) */
+.assistive-btn {
+    position: fixed;
+    top: 30px;
+    /* <--- Changé de bottom à top */
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 18px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    overflow: hidden;
-    z-index: 10;
-    width: 150px;
-    height: 40px;
-    backdrop-filter: blur(5px);
-    transition: background 0.3s ease;
+    align-items: center;
+    z-index: 3000;
+    cursor: grab;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    touch-action: none;
+    transition: opacity 0.3s ease;
+
+    /* Animation de pulsation douce */
+    animation: pulseGlow 2.5s infinite ease-in-out;
 }
 
-.btn-explication:hover {
-    background: #ff0000;
-    color: #000;
+.assistive-btn:active {
+    cursor: grabbing;
 }
 
-.btn-text {
-    position: relative;
-    z-index: 2;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    animation: textFade 5s infinite ease-in-out;
-    line-height: 0.90 !important;
-}
-
-.vector {
+/* Bulle d'aide à côté du bouton */
+.assistive-tooltip {
     position: absolute;
+    right: 72px;
+    /* Positionnée à gauche du bouton */
     top: 50%;
     transform: translateY(-50%);
-    height: 8px;
-    width: 12px;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: floatTooltip 2s infinite ease-in-out;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.assistive-tooltip.hidden-tooltip {
+    opacity: 0;
+}
+
+/* Keyframes pour les animations */
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes floatTooltip {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(-5px);
+    }
+}
+
+/* Le cœur blanc du bouton */
+.assistive-btn .assistive-core {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid #ffffff66;
+    background: #ffffffd9;
+    box-shadow: 0 0 10px #FF0027;
+}
+
+/* Fond sombre quand le menu est ouvert */
+.assistive-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 3050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.assistive-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Le Menu Pop-up */
+.assistive-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 260px;
+    background: rgba(40, 40, 40, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 25px;
+    z-index: 3100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.assistive-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* La grille des icônes */
+.assistive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.assistive-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 1;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.vector svg,
-.vector img {
-    height: 100%;
-    width: auto;
-    transform: rotate(270deg);
+.assistive-item:active {
+    transform: scale(0.9);
 }
 
-.vector-left {
-    animation: moveLeftVector 5s infinite ease-in-out;
+.assistive-item .icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.vector-right {
-    animation: moveRightVector 5s infinite ease-in-out;
+.assistive-item span:not(.icon) {
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    text-align: center;
 }
 
 
