@@ -23,12 +23,12 @@ const couleursPages = [
 let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
 const itemsPerPage = 7; // Les 7 blocs du design
 
-// Fonction utilitaire pour mettre à jour la barre mobile
+// Fonction utilitaire pour mettre à jour TOUTES les barres mobiles
 function changerCouleurNavigateur(couleur) {
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) {
-        metaTheme.setAttribute('content', couleur);
-    }
+    const metaThemes = document.querySelectorAll('meta[name="theme-color"]');
+    metaThemes.forEach(meta => {
+        meta.setAttribute('content', couleur);
+    });
 }
 
 
