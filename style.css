@@ -141,7 +141,7 @@ body {
     transform: translateY(-100%);
     visibility: hidden;
     /* On retarde la disparition de 'visibility' de 0.8s pour que l'animation ait le temps de se faire avant qu'il devienne invisible ! */
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0s linear 0.8s;
+    transition: transform 0s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0s linear 0s;
 
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
