@@ -233,8 +233,8 @@ function ouvrirPopup(projet, afficherTexte = false) {
     lightbox.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 
-    // NOUVEAU : On force les barres du téléphone en noir pour fusionner avec le flou
-    changerCouleurNavigateur('#000000');
+    // Ajoute le "false" ici 👇
+    changerCouleurNavigateur('#000000', false);
 }
 
 function fermerPopup() {
@@ -311,8 +311,8 @@ function genererMenu() {
 function ouvrirMenu() {
     genererMenu();
     fullscreenMenu.classList.add('menu-ouvert');
-    // Passe le haut/bas du téléphone en rouge quand le menu s'ouvre
-    changerCouleurNavigateur('#FF0027');
+    // Ajoute le "false" ici 👇
+    changerCouleurNavigateur('#FF0027', false);
 }
 
 function fermerMenu() {
@@ -335,8 +335,8 @@ if (contactLink && contactPage && backToHomeBtn) {
     contactLink.addEventListener('click', (e) => {
         e.preventDefault();
         contactPage.classList.remove('hidden');
-        // Passe le haut/bas du téléphone en rouge pour la page contact
-        changerCouleurNavigateur('#FF0027');
+        // Ajoute le "false" ici 👇
+        changerCouleurNavigateur('#FF0027', false);
     });
 
     backToHomeBtn.addEventListener('click', () => {
