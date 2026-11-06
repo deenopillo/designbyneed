@@ -7,6 +7,7 @@ const projets = [
         type: "image",
         mediaSrc: "images/Need 2.png",
         titre: "Need Studio — Branding Personnel",
+        tags: ["branding", "stratégie", "webdesign", "print"],
         description: `
 ### L'évidence d'un anagramme
 Il suffit de lire mon prénom à l'envers pour comprendre l'essence de mon studio : **Deen** devient **Need**. 
@@ -48,6 +49,7 @@ Plus qu'une simple signature figée, ce logo a été pensé comme une fenêtre e
         type: "image",
         mediaSrc: "images/Backline 2.png",
         titre: "Backline — L'esthétique Y2K au service de l'équité",
+        tags: ["direction artistique", "identité visuelle", "3d", "réseaux sociaux"],
         description: `
 ### Genèse : L'équité comme point de départ
 Backline n'est pas qu'une simple agence, c'est une réponse directe à une injustice. Sa fondatrice, une jeune entrepreneuse, a fait un constat alarmant : l'inégalité salariale flagrante entre les influenceurs noirs et blancs sur des collaborations identiques. Sa mission ? Rétablir la balance. Ma mission ? Lui créer une identité visuelle à la hauteur de son ambition.
@@ -84,6 +86,7 @@ Ce projet est un monstre de conception globale où **stratégie et design** fusi
         type: "image",
         mediaSrc: "images/Backline 9.png",
         titre: "Backline — L'esthétique Y2K au service de l'équité",
+        tags: ["direction artistique", "identité visuelle", "3d", "réseaux sociaux"],
         description: `
 ### Genèse : L'équité comme point de départ
 Backline n'est pas qu'une simple agence, c'est une réponse directe à une injustice. Sa fondatrice, une jeune entrepreneuse, a fait un constat alarmant : l'inégalité salariale flagrante entre les influenceurs noirs et blancs sur des collaborations identiques. Sa mission ? Rétablir la balance. Ma mission ? Lui créer une identité visuelle à la hauteur de son ambition.
@@ -120,6 +123,7 @@ Ce projet est un monstre de conception globale où **stratégie et design** fusi
         type: "image",
         mediaSrc: "images/L'accolade 2.png",
         titre: "L'Accolade / Abrazo — Un vent du désert aux Cuves Gourmandes",
+        tags: ["direction artistique", "identité visuelle", "illustration", "print"],
         description: `
 ### Un sprint créatif : De la France au Mexique
 À l'origine, *L'Accolade* était une adresse axée sur les plats français. Lorsque le propriétaire a décidé de pivoter vers la gastronomie mexicaine, l'identité devait suivre sans renier son passé. Le nom s'est alors enrichi pour devenir **L'Accolade - Abrazo** (la traduction littérale en espagnol). Le véritable challenge ? Créer un univers visuel cohérent, percutant, et ce, dans un laps de temps extrêmement réduit.
@@ -152,6 +156,7 @@ Pour que l'identité soit à la fois lisible et immersive, nous avons joué sur 
         type: "image",
         mediaSrc: "images/True media 2.png",
         titre: "True Media — La vérité certifiée, esthétique Rétro-Gaming",
+        tags: ["ux / ui", "webdesign", "app design", "direction artistique"],
         description: `
 ### Le Pitch : La Blockchain rencontre la PS2
 Dans une ère où l'authenticité des médias est constamment remise en question, une entreprise spécialisée dans le Web3 a fait appel à moi pour un projet ambitieux : créer une application permettant aux reporters (et au grand public) de certifier des photos, vidéos et audios de façon infalsifiable grâce à la blockchain. 
@@ -187,6 +192,7 @@ L'expérience utilisateur a été pensée de A à Z. J'ai maquetté et prototyp�
         type: "image",
         mediaSrc: "images/1T1 2.png",
         titre: "121 — Vitesse, Réseaux et Architecture Technologique",
+        tags: ["identité visuelle", "webdesign", "ux / ui", "branding"],
         description: `
 ### Le Challenge : Moderniser sans dénaturer
 L'entreprise 121, experte dans le domaine de la blockchain, m'a confié une mission de refonte stratégique : moderniser son logo, faire évoluer sa palette chromatique et concevoir un tout nouveau site web. L'objectif était de projeter une image plus technologique et haut de gamme, tout en clarifiant ses trois piliers d'expertise : le Conseil, l'Hébergement et le Réseau.
@@ -220,6 +226,7 @@ L'interface du site web a été imaginée pour rivaliser avec les standards des 
         type: "image",
         mediaSrc: "images/By sibylette 2.png",
         titre: "By Sibylette — L'esthétique « Clean Beauty » pour un E-commerce 100% sur-mesure",
+        tags: ["e-commerce", "ux / ui", "webdesign", "développement"],
         description: `
 ### Le grand saut : De WordPress au Full-Custom
 La fondatrice de la marque de Skin Care *By Sibylette* souhaitait franchir un cap décisif : quitter son ancienne architecture WordPress pour basculer sur un site 100% codé sur-mesure. En binôme avec mon collègue développeur (Lohan), j'ai pris en charge l'intégralité de la conception UX/UI, du parcours client (Front-end) jusqu'à l'outil de gestion (Back-end). 
@@ -264,6 +271,7 @@ Parce qu'une gérante française a des besoins spécifiques, l'UX intègre une s
         type: "image",
         mediaSrc: "images/L'aller vers 2.png",
         titre: "L'Aller-Vers — La culture itinérante, créatrice de liens",
+        tags: ["identité visuelle", "logo", "illustration", "branding"],
         description: `
 ### Un projet de cœur et de terrain
 L'Aller-Vers est bien plus qu'un simple projet de design pour moi, puisque j'ai l'honneur d'en être le Vice-Président. Cette toute nouvelle association s'est fixée une mission magnifique : prendre la route à bord d'une caravane itinérante pour s'inviter dans les zones rurales et les coins reculés. L'objectif ? Rapprocher les gens, recréer du lien familial et intergénérationnel, et rendre la culture accessible là où elle se fait rare.
@@ -295,6 +303,7 @@ L'association venant de naître, cette identité est vouée à voyager et à gra
         type: "image",
         mediaSrc: "images/Arieda 2.png",
         titre: "ARIEDA — Accessibilité, Douceur et Inclusion",
+        tags: ["webdesign", "ux / ui", "développement", "refonte"],
         description: `
 ### Une refonte solidaire et nécessaire
 Ce projet est né d'une amitié et d'une volonté d'aider. L'ARIEDA (Association pour l’Intégration et l’Éducation des Déficients Auditifs) possédait un site internet devenu vieillissant et obsolète. Face à l'importance de leur mission, j'ai proposé mon expertise pour repenser entièrement leur vitrine digitale, en étroite collaboration avec leur chargée de communication.
@@ -331,6 +340,7 @@ Plutôt que de me battre avec des thèmes restrictifs, j'ai enfilé ma double ca
         type: "image",
         mediaSrc: "images/Pj 2.png",
         titre: "Laboratoire Créatif — Logofolio, Édition & Cover Design",
+        tags: ["logofolio", "direction artistique", "print", "cover design"],
         description: `
 ### 1. Logofolio & Explorations
 Le processus créatif est fait de pistes explorées, parfois non retenues, mais toujours riches en apprentissages. 

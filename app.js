@@ -208,6 +208,16 @@ function ouvrirPopup(projet, afficherTexte = false) {
         lightbox.classList.add('has-text');
         let contentHtml = '';
         if (projet.titre) contentHtml += `<h2 class="project-main-title">${projet.titre}</h2>`;
+
+        // --- NOUVEAU : Création des puces s'il y a des tags ---
+        if (projet.tags && projet.tags.length > 0) {
+            contentHtml += `<div class="project-tags">`;
+            projet.tags.forEach(tag => {
+                contentHtml += `<span class="project-tag">${tag}</span>`;
+            });
+            contentHtml += `</div>`;
+        }
+
         if (projet.description) {
             if (typeof marked !== 'undefined') contentHtml += marked.parse(projet.description);
             else contentHtml += `<p>${projet.description.replace(/\n/g, '<br>')}</p>`;

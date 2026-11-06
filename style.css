@@ -489,7 +489,6 @@ body {
     height: auto;
     object-fit: contain;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .lightbox-description {
@@ -517,6 +516,35 @@ body {
     letter-spacing: -1px;
     line-height: 1.1;
     color: #000;
+}
+
+/* --- Conteneur des puces --- */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+    /* Espace avant le texte de description */
+}
+
+/* --- Design de la puce --- */
+.project-tag {
+    background-color: #FF0027;
+    /* Fond rouge */
+    color: #FFFFFF;
+    /* Texte blanc */
+    font-size: 11px;
+    /* Petite taille */
+    font-weight: 800;
+    /* Bien gras */
+    letter-spacing: -0.5px;
+    /* Lettres resserrées */
+    padding: 5px 12px;
+    /* Espace intérieur (haut/bas gauche/droite) */
+    border-radius: 50px;
+    /* Forme de pilule arrondie */
+    text-transform: lowercase;
+    /* Tout en minuscules pour coller à ton style global */
 }
 
 .lightbox-description h3 {
@@ -1457,23 +1485,29 @@ body {
         /* Rend le scroll fluide sur iPhone */
     }
 
-    /* --- 1. Quand il y a du texte (on équilibre l'espace) --- */
+    /* --- La zone de l'image quand il y a du texte --- */
     .lightbox-media {
-        /* 55px en haut pour la croix, 20px en bas pour rééquilibrer */
-        padding: 55px 20px 20px 20px;
-        min-height: auto;
+        /* On passe de 55px à 45px en haut pour la remonter encore un peu plus */
+        padding: 15px 20px 10px 20px;
         background: #FFFFFF;
         display: flex;
-        align-items: center;
+
+        /* C'EST CETTE LIGNE QUI COLLE L'IMAGE EN HAUT 👇 */
+        align-items: flex-start;
+
         justify-content: center;
+        flex-shrink: 0;
+        min-height: auto;
     }
 
+    /* --- La taille de l'image --- */
     .lightbox-media img {
-        max-height: 35dvh;
-        /* Un peu plus grand pour mieux voir le visuel */
+        /* L'image peut grandir jusqu'à 55% de l'écran si elle est verticale,
+           mais si elle est horizontale (comme ton logo), elle prendra juste
+           la place dont elle a besoin. */
+        max-height: 55dvh;
         width: 100%;
         object-fit: contain;
-        margin: auto;
     }
 
     /* --- 2. NOUVEAU : Centrage parfait quand il n'y a PAS de texte --- */
