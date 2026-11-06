@@ -279,6 +279,7 @@ window.onload = () => {
 const fullscreenMenu = document.getElementById('fullscreen-menu');
 const openMenuBtn = document.getElementById('open-menu-btn');
 const menuGridElement = document.getElementById('menu-grid');
+let menuTimeout; // Permet de stocker le délai pour pouvoir l'annuler si besoin
 
 function genererMenu() {
     menuGridElement.innerHTML = '';
@@ -311,20 +312,29 @@ function genererMenu() {
 function ouvrirMenu() {
     genererMenu();
     fullscreenMenu.classList.add('menu-ouvert');
-    // Ajoute le "false" ici 👇
-    changerCouleurNavigateur('#FF0027', false);
+
+    // On annule tout compte à rebours précédent par sécurité
+    clearTimeout(menuTimeout);
+
+    // On attend 800ms (la durée exacte du rebond CSS) avant d'afficher le rouge
+    menuTimeout = setTimeout(() => {
+        changerCouleurNavigateur('#FF0027', false);
+    }, 800);
 }
 
 function fermerMenu() {
     fullscreenMenu.classList.remove('menu-ouvert');
-    // Remet la couleur exacte de la page courante lors de la fermeture
+
+    // Si on ferme le menu avant la fin des 800ms, on annule le passage au rouge
+    clearTimeout(menuTimeout);
+
+    // Remet la couleur exacte de la page courante immédiatement
     const couleurPage = couleursPages[currentPage] || '#FFFFFF';
     changerCouleurNavigateur(couleurPage);
 }
 
 openMenuBtn.addEventListener('click', ouvrirMenu);
 document.getElementById('close-menu-btn').addEventListener('click', fermerMenu);
-
 
 // --- 6. GESTION DE L'OUVERTURE / FERMETURE DE LA PAGE CONTACT ---
 const contactPage = document.getElementById('contact-page');
