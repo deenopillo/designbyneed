@@ -24,7 +24,7 @@ let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuell
 const itemsPerPage = 7; // Les 7 blocs du design
 
 // Fonction utilitaire pour forcer la couleur de Safari et contrer le cache
-function changerCouleurNavigateur(couleur) {
+function changerCouleurNavigateur(couleur, changerLeFond = true) {
     // 1. Trouve ou crée la balise meta theme-color
     let metaTheme = document.querySelector('meta[name="theme-color"]');
     if (!metaTheme) {
@@ -42,9 +42,11 @@ function changerCouleurNavigateur(couleur) {
         });
     }
 
-    // 3. ANTI-CACHE : Force la couleur de fond directement sur la page !
-    document.documentElement.style.setProperty('background-color', couleur, 'important');
-    document.body.style.setProperty('background-color', couleur, 'important');
+    // 3. ANTI-CACHE : Force la couleur de fond DIRECTEMENT UNIQUEMENT si on le demande
+    if (changerLeFond) {
+        document.documentElement.style.setProperty('background-color', couleur, 'important');
+        document.body.style.setProperty('background-color', couleur, 'important');
+    }
 }
 
 

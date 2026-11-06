@@ -1457,18 +1457,41 @@ body {
         /* Rend le scroll fluide sur iPhone */
     }
 
+    /* --- 1. Quand il y a du texte (on équilibre l'espace) --- */
     .lightbox-media {
-        /* 55px en haut pour laisser la place à la croix de fermeture */
-        padding: 55px 20px 10px 20px;
+        /* 55px en haut pour la croix, 20px en bas pour rééquilibrer */
+        padding: 55px 20px 20px 20px;
         min-height: auto;
         background: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .lightbox-media img {
-        max-height: 28dvh;
+        max-height: 35dvh;
+        /* Un peu plus grand pour mieux voir le visuel */
         width: 100%;
         object-fit: contain;
-        /* Force l'image à garder ses proportions sans être rognée */
+        margin: auto;
+    }
+
+    /* --- 2. NOUVEAU : Centrage parfait quand il n'y a PAS de texte --- */
+    #lightbox:not(.has-text) .lightbox-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #lightbox:not(.has-text) .lightbox-media {
+        /* Padding symétrique : 60px en haut (pour éviter la croix) ET 60px en bas pour centrer parfaitement */
+        padding: 60px 20px;
+        width: 100%;
+    }
+
+    #lightbox:not(.has-text) .lightbox-media img {
+        max-height: 70dvh;
+        /* Permet à l'image d'occuper presque tout l'écran */
     }
 
     .lightbox-description {
