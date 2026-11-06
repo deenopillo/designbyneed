@@ -398,12 +398,12 @@ function initScratchCard(canvas, img, container, promptDiv) {
 
         // 1. FALLBACK DE SÉCURITÉ : On met un fond gris argenté.
         // Comme ça, même si l'image "texture-verre.jpg" n'existe pas, on a quand même un ticket à gratter !
-        ctx.fillStyle = '#C0C0C0';
+        ctx.fillStyle = '#FF0027';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // 2. On charge TA vraie photo de texture
         const glassTexture = new Image();
-        glassTexture.src = 'images/texture-verre.jpg';
+        glassTexture.src = '#FFFFFFF';
 
         glassTexture.onload = () => {
             // L'image est trouvée, on la dessine par-dessus le gris
