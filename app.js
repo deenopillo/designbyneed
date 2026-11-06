@@ -25,25 +25,17 @@ const itemsPerPage = 7; // Les 7 blocs du design
 
 // Fonction utilitaire pour forcer la couleur de Safari et contrer le cache
 function changerCouleurNavigateur(couleur, changerLeFond = true) {
-    // 1. Trouve ou crée la balise meta theme-color
-    let metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (!metaTheme) {
-        metaTheme = document.createElement('meta');
-        metaTheme.name = 'theme-color';
-        document.head.appendChild(metaTheme);
-    }
-    metaTheme.setAttribute('content', couleur);
+    // 1. ASTUCE SAFARI iOS : On supprime toutes les anciennes balises theme-color
+    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => meta.remove());
 
-    // 2. Nettoie les balises en double qui créent des conflits sur Safari
-    const toutesLesMetas = document.querySelectorAll('meta[name="theme-color"]');
-    if (toutesLesMetas.length > 1) {
-        toutesLesMetas.forEach((meta, index) => {
-            if (index > 0) meta.remove(); // On ne garde que la première
-        });
-    }
+    // 2. On crée une toute NOUVELLE balise pour forcer Safari à réagir
+    const nouvelleMeta = document.createElement('meta');
+    nouvelleMeta.name = 'theme-color';
+    nouvelleMeta.content = couleur;
+    document.head.appendChild(nouvelleMeta);
 
-    // 3. ANTI-CACHE : Force la couleur de fond DIRECTEMENT UNIQUEMENT si on le demande
-    if (changerLeFond) {
+    // 3. On ne modifie le fond du site QUE si on le demande (changerLeFond = true)
+    if (changerLeFond === true) {
         document.documentElement.style.setProperty('background-color', couleur, 'important');
         document.body.style.setProperty('background-color', couleur, 'important');
     }
@@ -279,19 +271,16 @@ window.onload = () => {
 const fullscreenMenu = document.getElementById('fullscreen-menu');
 const openMenuBtn = document.getElementById('open-menu-btn');
 const menuGridElement = document.getElementById('menu-grid');
-let menuTimeout; // Permet de stocker le délai pour pouvoir l'annuler si besoin
+let menuTimeout; // Très important pour gérer le délai
 
 function genererMenu() {
     menuGridElement.innerHTML = '';
-
     const totalPages = Math.ceil(projets.length / itemsPerPage);
 
     for (let i = 0; i < totalPages; i++) {
         const indexDeuxiemeProjet = (i * itemsPerPage) + 1;
-
         if (projets[indexDeuxiemeProjet]) {
             const projet = projets[indexDeuxiemeProjet];
-
             const item = document.createElement('div');
             item.classList.add('menu-item');
 
@@ -313,24 +302,29 @@ function ouvrirMenu() {
     genererMenu();
     fullscreenMenu.classList.add('menu-ouvert');
 
-    // On annule tout compte à rebours précédent par sécurité
+    // 1. On VERROUILLE le fond du site en blanc tout de suite 
+    // pour que l'accueil reste blanc pendant que le menu glisse.
+    const couleurPage = couleursPages[currentPage] || '#FFFFFF';
+    changerCouleurNavigateur(couleurPage, true);
+
+    // 2. On annule l'ancien chrono s'il y en a un
     clearTimeout(menuTimeout);
 
-    // On attend 800ms (la durée exacte du rebond CSS) avant d'afficher le rouge
+    // 3. Après 800ms (fin du rebond), on colore UNIQUEMENT la barre Safari en rouge (false)
     menuTimeout = setTimeout(() => {
         changerCouleurNavigateur('#FF0027', false);
-    }, 2000);
+    }, 800);
 }
 
 function fermerMenu() {
     fullscreenMenu.classList.remove('menu-ouvert');
 
-    // Si on ferme le menu avant la fin des 800ms, on annule le passage au rouge
+    // Si on referme le menu très vite, on annule le passage au rouge
     clearTimeout(menuTimeout);
 
-    // Remet la couleur exacte de la page courante immédiatement
+    // On remet la page et les barres à leur couleur normale
     const couleurPage = couleursPages[currentPage] || '#FFFFFF';
-    changerCouleurNavigateur(couleurPage);
+    changerCouleurNavigateur(couleurPage, true);
 }
 
 openMenuBtn.addEventListener('click', ouvrirMenu);
