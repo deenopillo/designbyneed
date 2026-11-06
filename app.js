@@ -25,16 +25,22 @@ const itemsPerPage = 7; // Les 7 blocs du design
 
 // Fonction utilitaire pour forcer la couleur de Safari et contrer le cache
 function changerCouleurNavigateur(couleur, changerLeFond = true) {
-    // 1. ASTUCE SAFARI iOS : On supprime toutes les anciennes balises theme-color
+    // 1. On supprime toutes les anciennes balises theme-color
     document.querySelectorAll('meta[name="theme-color"]').forEach(meta => meta.remove());
 
-    // 2. On crée une toute NOUVELLE balise pour forcer Safari à réagir
+    // 2. NOUVEAU : Si on demande "flou", on s'arrête ici !
+    // Sans balise theme-color, Safari va activer son flou natif par-dessus ta pop-up.
+    if (couleur === 'flou') {
+        return;
+    }
+
+    // 3. Sinon, on crée la balise avec la couleur pleine demandée
     const nouvelleMeta = document.createElement('meta');
     nouvelleMeta.name = 'theme-color';
     nouvelleMeta.content = couleur;
     document.head.appendChild(nouvelleMeta);
 
-    // 3. On ne modifie le fond du site QUE si on le demande (changerLeFond = true)
+    // 4. On modifie le fond du site uniquement si autorisé
     if (changerLeFond === true) {
         document.documentElement.style.setProperty('background-color', couleur, 'important');
         document.body.style.setProperty('background-color', couleur, 'important');
@@ -225,8 +231,8 @@ function ouvrirPopup(projet, afficherTexte = false) {
     lightbox.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 
-    // Ajoute le "false" ici 👇
-    changerCouleurNavigateur('#000000', false);
+    // On supprime la couleur Safari pour laisser agir le flou natif de l'iPhone !
+    changerCouleurNavigateur('flou', false);
 }
 
 function fermerPopup() {
