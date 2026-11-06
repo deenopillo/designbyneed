@@ -319,7 +319,7 @@ function ouvrirMenu() {
     // On attend 800ms (la durée exacte du rebond CSS) avant d'afficher le rouge
     menuTimeout = setTimeout(() => {
         changerCouleurNavigateur('#FF0027', false);
-    }, 800);
+    }, 2000);
 }
 
 function fermerMenu() {
