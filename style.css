@@ -1769,3 +1769,186 @@ body {
     transform: scale(0.98);
     background: #222;
 }
+
+/* =========================================
+   15. CURSEUR PERSONNALISÉ
+========================================= */
+
+@media (pointer: fine) {
+
+    body,
+    a,
+    button,
+    .bento-item,
+    .logo,
+    .logo-menu,
+    .page-num,
+    .assistive-btn,
+    .menu-item,
+    input,
+    textarea {
+        cursor: none !important;
+    }
+}
+
+/* Le conteneur du curseur (transformé en cercle parfait) */
+.cursor-dot {
+    width: 40px;
+    /* Ajusté un peu pour un beau rond */
+    height: 40px;
+    border-radius: 50%;
+    /* Crée le cercle parfait */
+    overflow: hidden;
+    /* Cache tout ce qui dépasse du rond */
+    background-color: #FF0027;
+    /* Fond rouge par défaut du cercle */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* L'image du logo à l'intérieur du rond */
+.cursor-dot img {
+    width: 70%;
+    /* Ajuste la taille du logo à l'intérieur du cercle */
+    height: 70%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 0 #FFFFFF);
+    /* Logo en blanc par défaut sur fond rouge */
+    transition: filter 0.2s ease;
+}
+
+/* Effet au survol d'un lien */
+.cursor-dot.hovered {
+    transform: translate(-50%, -50%) scale(0.7);
+    background-color: #000000;
+    /* Le cercle devient noir au survol */
+}
+
+.cursor-dot.hovered img {
+    filter: drop-shadow(0 0 0 #FFFFFF);
+    /* Logo reste blanc sur le fond noir du cercle */
+}
+
+/* --- MODE "FOND ROUGE" (Menu & Contact) --- */
+.cursor-dot.on-red {
+    background-color: #FFFFFF;
+    /* Le cercle devient blanc sur fond rouge */
+}
+
+.cursor-dot.on-red img {
+    filter: drop-shadow(0 0 0 #FF0027);
+    /* Logo devient rouge à l'intérieur */
+}
+
+.cursor-dot.on-red.hovered {
+    background-color: #000000;
+}
+
+.cursor-dot.on-red.hovered img {
+    filter: drop-shadow(0 0 0 #FFFFFF);
+}
+
+/* --- MODE "FOND NOIR" --- */
+.cursor-dot.on-black {
+    background-color: #FFFFFF;
+    /* Cercle blanc sur fond noir */
+}
+
+.cursor-dot.on-black img {
+    filter: drop-shadow(0 0 0 #000000);
+    /* Logo noir à l'intérieur */
+}
+
+.cursor-dot.on-black.hovered {
+    background-color: #FF0027;
+    /* Cercle rouge au survol */
+}
+
+.cursor-dot.on-black.hovered img {
+    filter: drop-shadow(0 0 0 #FFFFFF);
+}
+
+/* Le cercle extérieur - PLUS IMPOSANT */
+.cursor-outline {
+    width: 55px;
+    height: 55px;
+    border: 3px dotted #FF0027;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* --- EFFETS AU SURVOL --- */
+.cursor-dot.hovered {
+    transform: translate(-50%, -50%) scale(0.7);
+    background-color: #000000;
+}
+
+.cursor-outline.hovered {
+    width: 75px;
+    height: 75px;
+    border: 2px solid #000000;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* --- MODE "FOND ROUGE" --- */
+.cursor-dot.on-red {
+    background-color: #FFFFFF;
+}
+
+.cursor-outline.on-red {
+    border-color: #FFFFFF;
+}
+
+.cursor-dot.on-red.hovered {
+    background-color: #000000;
+}
+
+.cursor-outline.on-red.hovered {
+    border-color: #000000;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- MODE "FOND NOIR" --- */
+.cursor-dot.on-black {
+    background-color: #FFFFFF;
+}
+
+.cursor-outline.on-black {
+    border-color: #FFFFFF;
+}
+
+.cursor-dot.on-black.hovered {
+    background-color: #FF0027;
+    box-shadow: none;
+}
+
+.cursor-outline.on-black.hovered {
+    border-color: #FF0027;
+    background-color: rgba(255, 0, 39, 0.1);
+    box-shadow: none;
+}
+
+/* Sécurité Mobile */
+@media (max-width: 768px),
+(pointer: coarse) {
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none !important;
+    }
+}

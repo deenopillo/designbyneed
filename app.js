@@ -679,3 +679,77 @@ if (btnMagic) {
         });
     }
 }
+
+// =========================================
+// 11. GESTION DU CURSEUR PERSONNALISÉ
+// =========================================
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorOutline = document.querySelector('.cursor-outline');
+
+if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let outlineX = mouseX;
+    let outlineY = mouseY;
+
+    // 1. Mise à jour des coordonnées et détection des couleurs de fond
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+
+        // DÉTECTION INTELLIGENTE DU FOND
+        if (e.target.closest('.contact-form-container') || e.target.closest('.menu-item:first-child') || e.target.closest('.ios-notif-action-btn')) {
+            cursorDot.classList.add('on-black');
+            cursorOutline.classList.add('on-black');
+            cursorDot.classList.remove('on-red');
+            cursorOutline.classList.remove('on-red');
+        }
+        else if (e.target.closest('.contact-info') || e.target.closest('.white-card')) {
+            cursorDot.classList.remove('on-red', 'on-black');
+            cursorOutline.classList.remove('on-red', 'on-black');
+        }
+        else if (e.target.closest('#fullscreen-menu') || e.target.closest('#contact-page')) {
+            cursorDot.classList.add('on-red');
+            cursorOutline.classList.add('on-red');
+            cursorDot.classList.remove('on-black');
+            cursorOutline.classList.remove('on-black');
+        }
+        else {
+            cursorDot.classList.remove('on-red', 'on-black');
+            cursorOutline.classList.remove('on-red', 'on-black');
+        }
+    });
+
+    // 2. Boucle d'animation (effet retard du cercle)
+    function animateCursor() {
+        outlineX += (mouseX - outlineX) * 0.15;
+        outlineY += (mouseY - outlineY) * 0.15;
+
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // 3. Détection du survol (Hover)
+    const cliquables = 'a, button, .bento-item, .logo, .logo-menu, .page-num, .assistive-btn, .close-btn, .close-lightbox-btn, .menu-item, input, textarea, label';
+
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(cliquables)) {
+            cursorDot.classList.add('hovered');
+            cursorOutline.classList.add('hovered');
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(cliquables)) {
+            cursorDot.classList.remove('hovered');
+            cursorOutline.classList.remove('hovered');
+        }
+    });
+}
