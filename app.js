@@ -409,12 +409,13 @@ window.addEventListener('load', () => {
         }
     }, 2500);
 
-    // --- GESTION DES GESTES TACTILES (GLISSER VERS LE HAUT OU LE BAS) ---
+    // --- GESTION DES GESTES TACTILES ET CLICS ---
     if (notif) {
         let startY = 0;
         let currentY = 0;
         let isSwiping = false;
 
+        // 1. GESTION DU GLISSEMENT (SWIPE)
         notif.addEventListener('touchstart', (e) => {
             startY = e.touches[0].clientY;
             isSwiping = true;
@@ -426,7 +427,7 @@ window.addEventListener('load', () => {
             currentY = e.touches[0].clientY;
             let diffY = currentY - startY;
 
-            // Si déjà étendu, on bloque le mouvement vers le bas pour laisser place au scroll interne si besoin
+            // Si déjà étendu, on bloque le mouvement vers le bas pour le scroll natif
             if (notif.classList.contains('expanded') && diffY > 0) return;
 
             notif.style.transform = `translateX(-50%) translateY(${diffY}px)`;
@@ -440,22 +441,36 @@ window.addEventListener('load', () => {
 
             let diffY = currentY - startY;
 
-            // 1. GLISSER VERS LE BAS (> 70px) : Étend la notification (mode "réponse")
+            // GLISSER VERS LE BAS (> 70px) : Étend la notification
             if (diffY > 70 && !notif.classList.contains('expanded')) {
                 notif.classList.add('expanded');
             }
-            // 2. GLISSER VERS LE HAUT (< -40px) : Fait disparaître la notification
+            // GLISSER VERS LE HAUT (< -40px) : Fait disparaître la notification
             else if (diffY < -40) {
                 notif.classList.remove('show', 'expanded');
             }
         });
+
+        // 2. NOUVEAU : FERMER EN CLIQUANT/TOUCHANT EN DEHORS DE LA BULLE
+        // On utilise 'touchstart' pour mobile et 'click' pour ordinateur
+        const fermerSiHorsNotif = (e) => {
+            // Si la notif est visible ET que l'élément cliqué n'est pas DANS la notif
+            if (notif.classList.contains('show') && !notif.contains(e.target)) {
+                notif.classList.remove('show', 'expanded');
+            }
+        };
+
+        document.addEventListener('touchstart', fermerSiHorsNotif, { passive: true });
+        document.addEventListener('click', fermerSiHorsNotif);
     }
 
     // --- CLIC SUR LE BOUTON CONTACT DE LA NOTIFICATION ---
     if (notifContactBtn && contactPage && notif) {
-        notifContactBtn.addEventListener('click', () => {
+        notifContactBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Évite que le clic se propage
             notif.classList.remove('show', 'expanded');
             contactPage.classList.remove('hidden');
+            // Change la couleur Safari vers le rouge
             if (typeof changerCouleurNavigateur === 'function') {
                 changerCouleurNavigateur('#FF0027', false);
             }
