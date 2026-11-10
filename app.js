@@ -57,9 +57,8 @@ const lightboxDesc = document.getElementById('lightbox-description');
 function afficherProjets() {
     const couleurActuelle = couleursPages[currentPage] || '#FFFFFF';
 
-    // Application de la couleur au body et au navigateur
-    document.body.style.backgroundColor = couleurActuelle;
-    changerCouleurNavigateur(couleurActuelle);
+    // Application de la couleur au body et au navigateur (TOUJOURS TRUE ICI)
+    changerCouleurNavigateur(couleurActuelle, true);
 
     mainGrid.innerHTML = '';
 
@@ -167,7 +166,6 @@ function afficherPagination() {
         }
     }
 
-    // Le conteneur s'appelle toujours 'pagination' dans le JS
     document.getElementById('pagination').innerHTML = pagesHtml;
 }
 
@@ -182,11 +180,9 @@ nextBtn.addEventListener('click', () => {
     const totalPages = Math.ceil(projets.length / itemsPerPage);
     currentPage++;
 
-    // Si on dépasse la dernière page, on retourne à la première
     if (currentPage >= totalPages) {
         currentPage = 0;
     }
-
     afficherProjets();
 });
 
@@ -232,17 +228,17 @@ function ouvrirPopup(projet, afficherTexte = false) {
     lightbox.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 
-    // On utilise un gris foncé pour imiter le verre dépoli noir
-    changerCouleurNavigateur('#333333', true);
+    // ⚠️ FALSE ICI : On change la couleur de la barre en gris foncé, mais on laisse le fond du site en blanc pour que le flou marche !
+    changerCouleurNavigateur('#333333', false);
 }
 
 function fermerPopup() {
     lightbox.classList.add('hidden');
     document.body.style.overflow = ''; // Rétablit le scroll
 
-    // NOUVEAU : On remet la couleur blanche (ou celle de la page) aux barres du téléphone
+    // On remet le fond totalement blanc (ou la couleur de la page)
     const couleurPage = couleursPages[currentPage] || '#FFFFFF';
-    changerCouleurNavigateur(couleurPage);
+    changerCouleurNavigateur(couleurPage, true);
 }
 
 // Clic sur la croix de fermeture
@@ -317,19 +313,18 @@ function ouvrirMenu() {
     // 2. On annule l'ancien chrono s'il y en a un
     clearTimeout(menuTimeout);
 
-    // 3. Après 800ms (fin du rebond), on colore UNIQUEMENT la barre Safari en rouge (false)
+    // 3. Après 800ms (fin du rebond), on colore UNIQUEMENT la barre Safari en rouge
+    // FALSE ici pour ne pas peindre le body en rouge derrière le menu
     menuTimeout = setTimeout(() => {
-        changerCouleurNavigateur('#FF0027', true);
+        changerCouleurNavigateur('#FF0027', false);
     }, 800);
 }
 
 function fermerMenu() {
     fullscreenMenu.classList.remove('menu-ouvert');
-
-    // Si on referme le menu très vite, on annule le passage au rouge
     clearTimeout(menuTimeout);
 
-    // On remet la page et les barres à leur couleur normale
+    // On remet la page et les barres à leur couleur normale (TRUE)
     const couleurPage = couleursPages[currentPage] || '#FFFFFF';
     changerCouleurNavigateur(couleurPage, true);
 }
@@ -346,15 +341,15 @@ if (contactLink && contactPage && backToHomeBtn) {
     contactLink.addEventListener('click', (e) => {
         e.preventDefault();
         contactPage.classList.remove('hidden');
-        // Ajoute le "false" ici 👇
+        // TRUE car la page contact est 100% rouge
         changerCouleurNavigateur('#FF0027', true);
     });
 
     backToHomeBtn.addEventListener('click', () => {
         contactPage.classList.add('hidden');
-        // Remet la couleur exacte de la page courante lors de la fermeture
+        // TRUE pour remettre le blanc
         const couleurPage = couleursPages[currentPage] || '#FFFFFF';
-        changerCouleurNavigateur(couleurPage);
+        changerCouleurNavigateur(couleurPage, true);
     });
 }
 
@@ -367,7 +362,7 @@ logos.forEach(logo => {
 
     logo.addEventListener('click', () => {
         currentPage = 0;
-        afficherProjets();
+        afficherProjets(); // afficherProjets s'occupe déjà de remettre le blanc en TRUE
 
         if (contactPage && !contactPage.classList.contains('hidden')) {
             contactPage.classList.add('hidden');
@@ -398,7 +393,7 @@ window.addEventListener('load', () => {
                         notif.classList.add('show');
                     }, 500);
 
-                    // Disparition automatique au bout de 12 secondes (seulement si pas étendu)
+                    // Disparition automatique au bout de 12 secondes
                     setTimeout(() => {
                         if (notif && !notif.classList.contains('expanded')) {
                             notif.classList.remove('show');
@@ -451,10 +446,8 @@ window.addEventListener('load', () => {
             }
         });
 
-        // 2. NOUVEAU : FERMER EN CLIQUANT/TOUCHANT EN DEHORS DE LA BULLE
-        // On utilise 'touchstart' pour mobile et 'click' pour ordinateur
+        // 2. FERMER EN CLIQUANT/TOUCHANT EN DEHORS DE LA BULLE
         const fermerSiHorsNotif = (e) => {
-            // Si la notif est visible ET que l'élément cliqué n'est pas DANS la notif
             if (notif.classList.contains('show') && !notif.contains(e.target)) {
                 notif.classList.remove('show', 'expanded');
             }
@@ -467,13 +460,11 @@ window.addEventListener('load', () => {
     // --- CLIC SUR LE BOUTON CONTACT DE LA NOTIFICATION ---
     if (notifContactBtn && contactPage && notif) {
         notifContactBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Évite que le clic se propage
+            e.stopPropagation();
             notif.classList.remove('show', 'expanded');
             contactPage.classList.remove('hidden');
-            // Change la couleur Safari vers le rouge
-            if (typeof changerCouleurNavigateur === 'function') {
-                changerCouleurNavigateur('#FF0027', true);
-            }
+            // TRUE ici pour colorer toute la page contact en rouge et éviter le bord blanc
+            changerCouleurNavigateur('#FF0027', true);
         });
     }
 });
@@ -484,29 +475,23 @@ function initScratchCard(canvas, img, container, promptDiv) {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     let isDrawing = false;
 
-    // ASTUCE : On attend 50ms pour laisser le temps au navigateur de dessiner 
-    // la grille et de donner une vraie largeur/hauteur au container
     setTimeout(() => {
         canvas.width = container.offsetWidth;
         canvas.height = container.offsetHeight;
 
-        // 1. FALLBACK DE SÉCURITÉ : On met un fond gris argenté.
-        // Comme ça, même si l'image "texture-verre.jpg" n'existe pas, on a quand même un ticket à gratter !
         ctx.fillStyle = '#FF0027';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. On charge TA vraie photo de texture
         const glassTexture = new Image();
         glassTexture.src = '#FFFFFFF';
 
         glassTexture.onload = () => {
-            // L'image est trouvée, on la dessine par-dessus le gris
             const scale = Math.max(canvas.width / glassTexture.width, canvas.height / glassTexture.height);
             const x = (canvas.width / 2) - (glassTexture.width / 2) * scale;
             const y = (canvas.height / 2) - (glassTexture.height / 2) * scale;
 
             ctx.globalAlpha = 0.9;
-            ctx.globalCompositeOperation = 'source-over'; // S'assure qu'on dessine par dessus
+            ctx.globalCompositeOperation = 'source-over';
             ctx.drawImage(glassTexture, x, y, glassTexture.width * scale, glassTexture.height * scale);
             ctx.globalAlpha = 1.0;
         };
@@ -515,9 +500,8 @@ function initScratchCard(canvas, img, container, promptDiv) {
             console.warn("L'image texture-verre.jpg n'a pas été trouvée, le ticket reste gris argenté.");
         };
 
-    }, 50); // Le fameux délai de 50 millisecondes
+    }, 50);
 
-    // --- LE PINCEAU POUR GRATTER ---
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
         const clientX = e.clientX || (e.touches && e.touches[0].clientX);
@@ -529,13 +513,12 @@ function initScratchCard(canvas, img, container, promptDiv) {
         if (!isDrawing) return;
         e.preventDefault();
 
-        // Fait disparaître le texte "grattez-moi"
         if (promptDiv.style.opacity !== '0') {
             promptDiv.style.opacity = '0';
         }
 
         const pos = getMousePos(e);
-        ctx.globalCompositeOperation = 'destination-out'; // C'est ça qui "efface"
+        ctx.globalCompositeOperation = 'destination-out';
 
         const gradient = ctx.createRadialGradient(pos.x, pos.y, 10, pos.x, pos.y, 65);
         gradient.addColorStop(0, 'rgba(0,0,0,1)');
@@ -547,13 +530,11 @@ function initScratchCard(canvas, img, container, promptDiv) {
         ctx.fill();
     }
 
-    // Événements souris
     canvas.addEventListener('mousedown', () => { isDrawing = true; });
     canvas.addEventListener('mouseup', () => { isDrawing = false; });
     canvas.addEventListener('mousemove', scratch);
     canvas.addEventListener('mouseleave', () => { isDrawing = false; });
 
-    // Événements tactiles (téléphone)
     canvas.addEventListener('touchstart', (e) => { isDrawing = true; }, { passive: false });
     canvas.addEventListener('touchend', () => { isDrawing = false; });
     canvas.addEventListener('touchmove', scratch, { passive: false });
@@ -566,9 +547,8 @@ const assistiveMenu = document.getElementById('assistive-menu');
 const assistiveOverlay = document.getElementById('assistive-overlay');
 const audioPlayer = document.getElementById('projet-audio');
 
-// 1. Logique de Déplacement (Drag & Drop)
 let isDragging = false;
-let hasDragged = false; // Pour différencier un clic d'un glissement
+let hasDragged = false;
 let startX, startY;
 
 function startDrag(e) {
@@ -584,15 +564,16 @@ function startDrag(e) {
 
 function moveDrag(e) {
     if (!isDragging || !assistiveBtn) return;
-    hasDragged = true; // S'il bouge, ce n'est plus un simple clic
-    e.preventDefault(); // Empêche le scroll sur mobile
+    hasDragged = true;
+    e.preventDefault();
 
     const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
 
+    // ⚠️ LA SYNTAXE EST RÉPARÉE ICI
     assistiveBtn.style.left = `${clientX - startX}px`;
     assistiveBtn.style.top = `${clientY - startY}px`;
-    assistiveBtn.style.bottom = 'auto'; // Désactive le CSS par défaut
+    assistiveBtn.style.bottom = 'auto';
     assistiveBtn.style.right = 'auto';
 }
 
@@ -601,19 +582,16 @@ function endDrag() {
 }
 
 if (assistiveBtn) {
-    // Événements Souris
     assistiveBtn.addEventListener('mousedown', startDrag);
     document.addEventListener('mousemove', moveDrag);
     document.addEventListener('mouseup', endDrag);
 
-    // Événements Tactiles (Mobile)
     assistiveBtn.addEventListener('touchstart', startDrag, { passive: false });
     document.addEventListener('touchmove', moveDrag, { passive: false });
     document.addEventListener('touchend', endDrag);
 
-    // 2. Ouverture / Fermeture du Menu
     assistiveBtn.addEventListener('click', () => {
-        if (!hasDragged) { // Ouvre uniquement si on a juste cliqué, pas glissé
+        if (!hasDragged) {
             assistiveMenu.classList.add('active');
             assistiveOverlay.classList.add('active');
         }
@@ -624,6 +602,7 @@ if (assistiveOverlay) {
     assistiveOverlay.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
+        // TRUE pour nettoyer toute couleur résiduelle après la fermeture du menu Apple
         changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
     });
 }
@@ -635,7 +614,6 @@ if (btnExplication) {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
 
-        // On récupère le bon projet (ici index 1 pour "Need Studio" comme ton ancien bouton)
         const projetInfo = projets[(currentPage * itemsPerPage) + 1];
         if (projetInfo) ouvrirPopup(projetInfo, true);
     });
@@ -670,7 +648,9 @@ if (btnMagic) {
     btnMagic.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
+        // TRUE pour remettre le blanc parfait sur tout l'écran après le clic sur la magie
         changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
+
         if (typeof confetti !== "undefined") {
             confetti({
                 particleCount: 100,
@@ -681,7 +661,6 @@ if (btnMagic) {
         }
     });
 
-    // Action pour ouvrir Instagram
     const btnInsta = document.getElementById('ast-insta');
     if (btnInsta) {
         btnInsta.addEventListener('click', () => {
@@ -691,7 +670,6 @@ if (btnMagic) {
         });
     }
 
-    // Action pour ouvrir LinkedIn
     const btnLinkedin = document.getElementById('ast-linkedin');
     if (btnLinkedin) {
         btnLinkedin.addEventListener('click', () => {
@@ -700,5 +678,4 @@ if (btnMagic) {
             window.open('https://www.linkedin.com/in/deen-haldane-5494bb195?utm_source=share_via&utm_content=profile&utm_medium=member_ios', '_blank');
         });
     }
-
 }
