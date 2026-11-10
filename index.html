@@ -53,10 +53,10 @@
         <!-- Petite barre de poignée style iOS -->
         <div class="ios-notif-handle"></div>
 
-        <button id="close-notif-btn" class="close-notif-btn" aria-label="Fermer">✕</button>
-
         <div class="ios-notif-header">
-            <div class="ios-notif-icon-wrapper ios-logo-bg"></div>
+            <div class="ios-notif-icon-wrapper">
+                <img src="images/Logo.svg" alt="App Icon" class="ios-notif-icon">
+            </div>
             <span class="ios-notif-app-name">Design by need</span>
             <span class="ios-notif-time">à l'instant</span>
         </div>
@@ -67,8 +67,12 @@
                 Je te laisse cliquer sur le petit bouton noir avec le logo blanc pour en découvrir davantage sur chaque
                 projet.
 
-                (P.S. : tu peux déplacer le bouton où tu le souhaites 😉)
-            </p>
+                (P.S. : tu peux déplacer le bouton où tu le souhaites 😉)</p>
+        </div>
+
+        <!-- Zone d'action qui s'affiche quand on tire vers le bas -->
+        <div class="ios-notif-actions">
+            <button id="notif-contact-btn" class="ios-notif-action-btn">Need d'un projet ?</button>
         </div>
     </div>
 

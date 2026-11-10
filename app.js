@@ -382,8 +382,8 @@ logos.forEach(logo => {
 window.addEventListener('load', () => {
     const loader = document.getElementById('site-loader');
     const notif = document.getElementById('ios-notification');
-    const closeNotifBtn = document.getElementById('close-notif-btn');
     const contactPage = document.getElementById('contact-page');
+    const notifContactBtn = document.getElementById('notif-contact-btn');
 
     // Disparition du loader après 2.5 secondes
     setTimeout(() => {
@@ -393,30 +393,23 @@ window.addEventListener('load', () => {
             setTimeout(() => {
                 loader.style.display = 'none';
 
-                // La notification s'affiche à chaque fois, sans condition de stockage
                 if (notif) {
                     setTimeout(() => {
                         notif.classList.add('show');
                     }, 500);
 
-                    // Disparition automatique au bout de 12 secondes
+                    // Disparition automatique au bout de 12 secondes (seulement si pas étendu)
                     setTimeout(() => {
-                        notif.classList.remove('show');
+                        if (notif && !notif.classList.contains('expanded')) {
+                            notif.classList.remove('show');
+                        }
                     }, 12000);
                 }
             }, 800);
         }
     }, 2500);
 
-    // Fermeture manuelle via la petite croix
-    if (closeNotifBtn && notif) {
-        closeNotifBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notif.classList.remove('show');
-        });
-    }
-
-    // --- GESTION DU GESTE TACTILE (GLISSER VERS LE BAS) ---
+    // --- GESTION DES GESTES TACTILES (GLISSER VERS LE HAUT OU LE BAS) ---
     if (notif) {
         let startY = 0;
         let currentY = 0;
@@ -433,9 +426,10 @@ window.addEventListener('load', () => {
             currentY = e.touches[0].clientY;
             let diffY = currentY - startY;
 
-            if (diffY > 0) {
-                notif.style.transform = `translateX(-50%) translateY(${diffY}px)`;
-            }
+            // Si déjà étendu, on bloque le mouvement vers le bas pour laisser place au scroll interne si besoin
+            if (notif.classList.contains('expanded') && diffY > 0) return;
+
+            notif.style.transform = `translateX(-50%) translateY(${diffY}px)`;
         }, { passive: true });
 
         notif.addEventListener('touchend', (e) => {
@@ -446,14 +440,24 @@ window.addEventListener('load', () => {
 
             let diffY = currentY - startY;
 
-            if (diffY > 70) {
-                notif.classList.remove('show');
-                if (contactPage) {
-                    contactPage.classList.remove('hidden');
-                    if (typeof changerCouleurNavigateur === 'function') {
-                        changerCouleurNavigateur('#FF0027', false);
-                    }
-                }
+            // 1. GLISSER VERS LE BAS (> 70px) : Étend la notification (mode "réponse")
+            if (diffY > 70 && !notif.classList.contains('expanded')) {
+                notif.classList.add('expanded');
+            }
+            // 2. GLISSER VERS LE HAUT (< -40px) : Fait disparaître la notification
+            else if (diffY < -40) {
+                notif.classList.remove('show', 'expanded');
+            }
+        });
+    }
+
+    // --- CLIC SUR LE BOUTON CONTACT DE LA NOTIFICATION ---
+    if (notifContactBtn && contactPage && notif) {
+        notifContactBtn.addEventListener('click', () => {
+            notif.classList.remove('show', 'expanded');
+            contactPage.classList.remove('hidden');
+            if (typeof changerCouleurNavigateur === 'function') {
+                changerCouleurNavigateur('#FF0027', false);
             }
         });
     }
