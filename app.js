@@ -378,20 +378,85 @@ logos.forEach(logo => {
 });
 
 
-// --- 8. GESTION DU LOADER (ÉCRAN D'ACCUEIL) ---
+// --- 8. GESTION DU LOADER (ÉCRAN D'ACCUEIL) ET NOTIFICATION ---
 window.addEventListener('load', () => {
     const loader = document.getElementById('site-loader');
+    const notif = document.getElementById('ios-notification');
+    const closeNotifBtn = document.getElementById('close-notif-btn');
+    const contactPage = document.getElementById('contact-page');
 
-    // Disparition après 2.5 secondes
+    // Disparition du loader après 2.5 secondes
     setTimeout(() => {
         if (loader) {
             loader.classList.add('hidden-loader');
 
             setTimeout(() => {
                 loader.style.display = 'none';
+
+                // La notification s'affiche à chaque fois, sans condition de stockage
+                if (notif) {
+                    setTimeout(() => {
+                        notif.classList.add('show');
+                    }, 500);
+
+                    // Disparition automatique au bout de 12 secondes
+                    setTimeout(() => {
+                        notif.classList.remove('show');
+                    }, 12000);
+                }
             }, 800);
         }
     }, 2500);
+
+    // Fermeture manuelle via la petite croix
+    if (closeNotifBtn && notif) {
+        closeNotifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notif.classList.remove('show');
+        });
+    }
+
+    // --- GESTION DU GESTE TACTILE (GLISSER VERS LE BAS) ---
+    if (notif) {
+        let startY = 0;
+        let currentY = 0;
+        let isSwiping = false;
+
+        notif.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+            isSwiping = true;
+            notif.classList.add('dragging');
+        }, { passive: true });
+
+        notif.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            currentY = e.touches[0].clientY;
+            let diffY = currentY - startY;
+
+            if (diffY > 0) {
+                notif.style.transform = `translateX(-50%) translateY(${diffY}px)`;
+            }
+        }, { passive: true });
+
+        notif.addEventListener('touchend', (e) => {
+            if (!isSwiping) return;
+            isSwiping = false;
+            notif.classList.remove('dragging');
+            notif.style.transform = '';
+
+            let diffY = currentY - startY;
+
+            if (diffY > 70) {
+                notif.classList.remove('show');
+                if (contactPage) {
+                    contactPage.classList.remove('hidden');
+                    if (typeof changerCouleurNavigateur === 'function') {
+                        changerCouleurNavigateur('#FF0027', false);
+                    }
+                }
+            }
+        });
+    }
 });
 
 

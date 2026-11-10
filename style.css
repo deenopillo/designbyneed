@@ -1616,3 +1616,144 @@ body {
         /* padding-top: 10px; (si tu utilises du padding à la place des marges) */
     }
 }
+
+/* =========================================
+   14. NOTIFICATION STYLE iOS
+========================================= */
+.ios-notification {
+    position: fixed;
+    /* On utilise safe-area pour éviter l'encoche des iPhones */
+    top: calc(15px + env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%) translateY(-150%);
+    width: 92%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+    z-index: 4000;
+    padding: 14px 16px;
+    /* Police système pour un vrai look Apple */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.ios-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* En-tête de la notif */
+.ios-notif-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.ios-notif-icon-wrapper {
+    width: 22px;
+    height: 22px;
+    background-color: #FF0027;
+    /* Fond noir pour faire ressortir ton logo blanc */
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.ios-notif-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+.ios-notif-app-name {
+    font-weight: 600;
+    color: #000;
+    flex-grow: 1;
+    letter-spacing: -0.3px;
+}
+
+.ios-notif-time {
+    color: #666;
+    font-weight: 400;
+}
+
+/* Corps du texte */
+.ios-notif-body {
+    padding-left: 30px;
+    /* Aligné avec le texte de l'en-tête */
+}
+
+.ios-notif-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: #000;
+    margin: 0 0 3px 0;
+    letter-spacing: -0.3px;
+}
+
+.ios-notif-text {
+    font-size: 14px;
+    color: #111;
+    line-height: 1.35;
+    margin: 0;
+    letter-spacing: -0.2px;
+}
+
+.ios-notif-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+/* --- STYLE DE LA CROIX DE LA NOTIFICATION --- */
+.close-notif-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #888;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close-notif-btn:hover {
+    color: #000;
+    transform: scale(1.1);
+}
+
+/* --- POIGNÉE DE GLISSEMENT (STYLE iOS) --- */
+.ios-notif-handle {
+    width: 36px;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    margin: 0 auto 8px auto;
+}
+
+/* On s'assure que la notif a une transition fluide quand on la relâche */
+.ios-notification {
+    touch-action: none;
+    /* Empêche le scroll de la page pendant qu'on glisse la notif */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+}
+
+/* Effet visuel lorsqu'on commence à tirer dessus */
+.ios-notification.dragging {
+    transition: none !important;
+    /* Désactive la transition pour un suivi instantané du doigt */
+}

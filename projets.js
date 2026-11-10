@@ -9,31 +9,84 @@ const projets = [
         titre: "Need Studio — Branding Personnel",
         tags: ["branding", "stratégie", "webdesign", "print"],
         description: `
-### L'évidence d'un anagramme
-Il suffit de lire mon prénom à l'envers pour comprendre l'essence de mon studio : **Deen** devient **Need**. 
-Une évidence linguistique qui traduit ma promesse : chaque marque et chaque créateur a *besoin* d'une vision créative forte pour raviver son projet et révéler tout son potentiel.
+# NEED — BRANDING PERSONNEL
 
-### La puissance du double « E »
-Au cœur de ce logo, le jeu sur le double "E" n'est pas qu'un choix esthétique. C'est le reflet de la **dualité** qui rythme ma vie et mon processus créatif :
-- Mon signe astrologique (Gémeaux).
-- Mon héritage multiculturel (double nationalité).
-- Ma pluralité créative (Graphisme, Webdesign, Stratégie de marque).
+### L'évidence d'un nom, la force d'une vision.
 
-### Un héritage tissé dans la DA
-La typographie choisie incarne parfaitement ma personnalité : un équilibre millimétré entre une rigueur très **sérieuse** et une approche foncièrement **fun** et audacieuse. 
+Il y a des idées qui naissent d'une évidence.
 
-> *"Un clin d'œil à mes racines : l'utilisation subtile du motif Tartan vient structurer l'identité, rendant hommage à mon côté écossais."*
+Des idées qui prennent sens avant même d'être expliquées.
 
-Aujourd'hui portée par un **rouge vif** qui symbolise mon énergie bouillonnante, l'identité est vouée à évoluer. Le vert, ma couleur de cœur, viendra prochainement s'y greffer pour créer le trait d'union chromatique parfait entre mes origines écossaises et pakistanaises.
+Need, c'est Deen à l'envers. Un jeu de lettres, presque un hasard, qui devient une intention.
 
-### Un logo qui prend vie
-Plus qu'une simple signature figée, ce logo a été pensé comme une fenêtre et un outil visuel. Sur les différents supports de communication, il interagit avec son environnement : il cible les éléments clés, encadre l'action et donne littéralement vie aux photographies qu'il accompagne.
+Car derrière chaque marque, chaque projet, chaque créateur, il y a un **besoin** : celui de trouver sa direction, d'affirmer son identité et de révéler ce qui le rend singulier.
 
-#### Expertises déployées
-- **Stratégie :** Positionnement et architecture de marque
-- **Branding :** Identité visuelle, logo et typographie
-- **Digital :** Webdesign et UI/UX
-- **Print :** Déclinaisons sur supports physiques
+Nous croyons qu'une identité ne doit pas simplement être belle. Elle doit raconter, traduire, transmettre.
+
+Elle doit donner du sens à ce qui existe déjà et ouvrir la voie à ce qui reste à construire.
+
+> **Need est né de cette conviction : une vision créative forte peut transformer un projet et lui donner toute sa dimension.**
+
+### La dualité comme signature.
+
+Au cœur de cette identité, un double **E**.
+
+Deux lettres qui se répondent, se complètent et s'équilibrent.
+
+Elles racontent une personnalité faite de contrastes et de complémentarités :
+
+- Un signe astrologique, les **Gémeaux**.
+- Un héritage multiculturel, entre deux nationalités.
+- Une approche créative plurielle, entre graphisme, webdesign et stratégie de marque.
+
+Parce qu'une identité ne se construit pas dans une seule direction. Elle se nourrit de plusieurs influences, de sensibilités différentes et de regards qui se croisent.
+
+Cette dualité n'est pas une opposition. Elle est une richesse.
+
+### Des racines, une identité.
+
+Nous croyons que les histoires personnelles ont toute leur place dans la création.
+
+La typographie traduit cet équilibre qui caractérise Need : une rigueur affirmée, associée à une liberté de ton, une touche de spontanéité et une certaine audace.
+
+Le motif **Tartan** vient subtilement ancrer cette identité dans une histoire plus intime. Un clin d'œil aux racines écossaises, une manière de faire dialoguer héritage et modernité.
+
+Le **rouge vif** donne aujourd'hui le ton. Il exprime l'énergie, le mouvement et cette envie de créer sans rester dans les codes établis.
+
+Demain, le **vert** viendra enrichir cette palette. Une nouvelle nuance, un nouveau lien entre deux cultures, deux histoires et deux origines.
+
+Car une identité n'est jamais totalement figée. Elle évolue, s'enrichit et grandit avec celles et ceux qui la portent.
+
+### Une identité qui ne reste pas immobile.
+
+Un logo ne devrait pas seulement exister sur un fond blanc.
+
+Il devrait vivre, interagir et prendre sa place dans son environnement.
+
+C'est cette idée qui guide le système graphique de Need.
+
+Le logo devient une fenêtre, un cadre, un outil de composition. Il attire le regard, souligne les détails, met en lumière les messages et donne une nouvelle lecture aux images.
+
+Il ne se contente pas de signer un support. Il participe à son histoire.
+
+Parce qu'une identité visuelle forte ne se limite pas à un symbole. Elle se reconnaît, se décline et se vit sur chaque point de contact.
+
+### Des idées aux expériences.
+
+De la première intention à sa concrétisation, Need accompagne les projets dans toutes les dimensions de leur identité :
+
+- **Stratégie** — Donner une direction, définir un positionnement et construire une architecture de marque cohérente.
+- **Branding** — Créer des identités singulières à travers le logo, la typographie et les univers graphiques.
+- **Digital** — Imaginer des expériences numériques intuitives et esthétiques, du webdesign à l'UI/UX.
+- **Print** — Faire vivre les identités sur les supports physiques, avec cohérence et caractère.
+
+Parce qu'au-delà de l'esthétique, il y a une intention.
+
+Au-delà d'un logo, il y a une histoire.
+
+Et derrière chaque projet, il y a quelque chose à révéler.
+
+> **Need. Une vision créative pour donner forme à vos idées.**
         `
     },
     { id: 10, type: "image", mediaSrc: "images/Need 3.png", titre: "", description: `` },
