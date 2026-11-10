@@ -431,11 +431,11 @@ body {
 
 .close-lightbox-btn {
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 7px;
+    right: 7px;
     width: 40px;
     height: 40px;
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0);
     border: none;
     border-radius: 50%;
     font-size: 20px;
@@ -1518,7 +1518,6 @@ body {
     }
 
     #lightbox:not(.has-text) .lightbox-media {
-        /* Padding symétrique : 60px en haut (pour éviter la croix) ET 60px en bas pour centrer parfaitement */
         padding: 60px 20px;
         width: 100%;
     }
