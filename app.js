@@ -233,7 +233,7 @@ function ouvrirPopup(projet, afficherTexte = false) {
     document.body.style.overflow = 'hidden';
 
     // On utilise un gris foncé pour imiter le verre dépoli noir
-    changerCouleurNavigateur('#333333', false);
+    changerCouleurNavigateur('#333333', true);
 }
 
 function fermerPopup() {
@@ -319,7 +319,7 @@ function ouvrirMenu() {
 
     // 3. Après 800ms (fin du rebond), on colore UNIQUEMENT la barre Safari en rouge (false)
     menuTimeout = setTimeout(() => {
-        changerCouleurNavigateur('#FF0027', false);
+        changerCouleurNavigateur('#FF0027', true);
     }, 800);
 }
 
@@ -347,7 +347,7 @@ if (contactLink && contactPage && backToHomeBtn) {
         e.preventDefault();
         contactPage.classList.remove('hidden');
         // Ajoute le "false" ici 👇
-        changerCouleurNavigateur('#FF0027', false);
+        changerCouleurNavigateur('#FF0027', true);
     });
 
     backToHomeBtn.addEventListener('click', () => {
@@ -472,7 +472,7 @@ window.addEventListener('load', () => {
             contactPage.classList.remove('hidden');
             // Change la couleur Safari vers le rouge
             if (typeof changerCouleurNavigateur === 'function') {
-                changerCouleurNavigateur('#FF0027', false);
+                changerCouleurNavigateur('#FF0027', true);
             }
         });
     }
@@ -624,6 +624,7 @@ if (assistiveOverlay) {
     assistiveOverlay.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
+        changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
     });
 }
 
@@ -669,6 +670,7 @@ if (btnMagic) {
     btnMagic.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
+        changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
         if (typeof confetti !== "undefined") {
             confetti({
                 particleCount: 100,
