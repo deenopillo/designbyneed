@@ -236,6 +236,7 @@ function ouvrirPopup(projet, afficherTexte = false) {
 
     // 3. Afficher la popup et bloquer le fond
     lightbox.classList.remove('hidden');
+    document.body.classList.add('popup-ouverte');
     document.body.style.overflow = 'hidden';
 
     // ⚠️ FALSE ICI : On change la couleur de la barre en gris foncé, mais on laisse le fond du site en blanc pour que le flou marche !
@@ -244,6 +245,7 @@ function ouvrirPopup(projet, afficherTexte = false) {
 
 function fermerPopup() {
     lightbox.classList.add('hidden');
+    document.body.classList.remove('popup-ouverte');
     document.body.style.overflow = ''; // Rétablit le scroll
 
     resetCouleurPage();
@@ -535,6 +537,19 @@ const assistiveMenu = document.getElementById('assistive-menu');
 const assistiveOverlay = document.getElementById('assistive-overlay');
 const audioPlayer = document.getElementById('projet-audio');
 
+function ouvrirAssistive() {
+    assistiveOverlay.classList.add('visible');
+    void assistiveOverlay.offsetWidth; // force le navigateur à l'afficher avant l'animation
+    assistiveOverlay.classList.add('active');
+    assistiveMenu.classList.add('active');
+}
+
+function fermerAssistive() {
+    assistiveMenu.classList.remove('active');
+    // On retire VRAIMENT l'overlay de la page (display: none)
+    assistiveOverlay.classList.remove('active', 'visible');
+}
+
 let isDragging = false;
 let hasDragged = false;
 let startX, startY;
@@ -580,16 +595,14 @@ if (assistiveBtn) {
 
     assistiveBtn.addEventListener('click', () => {
         if (!hasDragged) {
-            assistiveMenu.classList.add('active');
-            assistiveOverlay.classList.add('active');
+            ouvrirAssistive();
         }
     });
 }
 
 if (assistiveOverlay) {
     assistiveOverlay.addEventListener('click', () => {
-        assistiveMenu.classList.remove('active');
-        assistiveOverlay.classList.remove('active');
+        fermerAssistive();
         resetCouleurPage();
     });
 }
@@ -598,11 +611,10 @@ if (assistiveOverlay) {
 const btnExplication = document.getElementById('ast-explication');
 if (btnExplication) {
     btnExplication.addEventListener('click', () => {
-        assistiveMenu.classList.remove('active');
-        assistiveOverlay.classList.remove('active');
+        fermerAssistive();
 
         const projetInfo = projets[(currentPage * itemsPerPage) + 1];
-        if (projetInfo) setTimeout(() => ouvrirPopup(projetInfo, true), 50);
+        if (projetInfo) setTimeout(() => ouvrirPopup(projetInfo, true), 80);
     });
 }
 
@@ -633,8 +645,7 @@ if (btnShare) {
 const btnMagic = document.getElementById('ast-magic');
 if (btnMagic) {
     btnMagic.addEventListener('click', () => {
-        assistiveMenu.classList.remove('active');
-        assistiveOverlay.classList.remove('active');
+        fermerAssistive();
         resetCouleurPage();
         if (typeof confetti !== "undefined") {
             confetti({
@@ -649,8 +660,7 @@ if (btnMagic) {
     const btnInsta = document.getElementById('ast-insta');
     if (btnInsta) {
         btnInsta.addEventListener('click', () => {
-            assistiveMenu.classList.remove('active');
-            assistiveOverlay.classList.remove('active');
+            fermerAssistive();
             window.open('https://www.instagram.com/designbyneed/', '_blank');
         });
     }
@@ -658,8 +668,7 @@ if (btnMagic) {
     const btnLinkedin = document.getElementById('ast-linkedin');
     if (btnLinkedin) {
         btnLinkedin.addEventListener('click', () => {
-            assistiveMenu.classList.remove('active');
-            assistiveOverlay.classList.remove('active');
+            fermerAssistive();
             window.open('https://www.linkedin.com/in/deen-haldane-5494bb195?utm_source=share_via&utm_content=profile&utm_medium=member_ios', '_blank');
         });
     }

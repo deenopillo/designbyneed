@@ -903,16 +903,42 @@ body {
     background: rgba(0, 0, 0, 0.3);
     z-index: 3050;
     opacity: 0;
-    visibility: hidden;
+    display: none;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    transition: opacity 0.3s ease;
+}
+
+.assistive-overlay.visible {
+    display: block;
 }
 
 .assistive-overlay.active {
     opacity: 1;
-    visibility: visible;
     pointer-events: auto;
-    transition: opacity 0.3s ease, visibility 0s;
+}
+
+/* Bandes opaques pour que Safari colore ses barres comme la pop-up */
+.edge-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #999999;
+    z-index: 2600;
+    display: none;
+    pointer-events: none;
+}
+
+#edge-top {
+    top: 0;
+}
+
+#edge-bottom {
+    bottom: 0;
+}
+
+body.popup-ouverte .edge-bar {
+    display: block;
 }
 
 /* Le Menu Pop-up */
