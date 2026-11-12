@@ -23,19 +23,29 @@ const couleursPages = [
 let currentPage = 0; // On commence bien à la page 0 (qui est la page 1 visuellement)
 const itemsPerPage = 7; // Les 7 blocs du design
 
-// Fonction utilitaire pour forcer la couleur de Safari et contrer le cache
-function changerCouleurNavigateur(couleur, changerLeFond = true) {
-    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => meta.remove());
+// Couleur que donne l'overlay noir à 40% sur du blanc (= le "flou" visuel)
+const COULEUR_POPUP = '#999999';
 
-    const nouvelleMeta = document.createElement('meta');
-    nouvelleMeta.name = 'theme-color';
-    nouvelleMeta.content = couleur;
-    document.head.appendChild(nouvelleMeta);
+function changerCouleurNavigateur(couleur, changerLeFond = true) {
+    let meta = document.getElementById('meta-theme-color');
+    if (!meta) {
+        meta = document.createElement('meta');
+        meta.id = 'meta-theme-color';
+        meta.name = 'theme-color';
+        document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', couleur);
 
     if (changerLeFond === true) {
         document.documentElement.style.setProperty('background-color', couleur, 'important');
         document.body.style.setProperty('background-color', couleur, 'important');
     }
+}
+
+function resetCouleurPage() {
+    const c = couleursPages[currentPage] || '#FFFFFF';
+    changerCouleurNavigateur(c, true);
+    setTimeout(() => changerCouleurNavigateur(c, true), 400);
 }
 
 
@@ -229,16 +239,14 @@ function ouvrirPopup(projet, afficherTexte = false) {
     document.body.style.overflow = 'hidden';
 
     // ⚠️ FALSE ICI : On change la couleur de la barre en gris foncé, mais on laisse le fond du site en blanc pour que le flou marche !
-    changerCouleurNavigateur('#333333', false);
+    changerCouleurNavigateur(COULEUR_POPUP, false);
 }
 
 function fermerPopup() {
     lightbox.classList.add('hidden');
     document.body.style.overflow = ''; // Rétablit le scroll
 
-    // On remet le fond totalement blanc (ou la couleur de la page)
-    const couleurPage = couleursPages[currentPage] || '#FFFFFF';
-    changerCouleurNavigateur(couleurPage, true);
+    resetCouleurPage();
 }
 
 // Clic sur la croix de fermeture
@@ -317,16 +325,14 @@ function ouvrirMenu() {
     // FALSE ici pour ne pas peindre le body en rouge derrière le menu
     menuTimeout = setTimeout(() => {
         changerCouleurNavigateur('#FF0027', false);
-    }, 800);
+    }, 600);
 }
 
 function fermerMenu() {
     fullscreenMenu.classList.remove('menu-ouvert');
     clearTimeout(menuTimeout);
 
-    // On remet la page et les barres à leur couleur normale (TRUE)
-    const couleurPage = couleursPages[currentPage] || '#FFFFFF';
-    changerCouleurNavigateur(couleurPage, true);
+    resetCouleurPage();
 }
 
 openMenuBtn.addEventListener('click', ouvrirMenu);
@@ -482,24 +488,6 @@ function initScratchCard(canvas, img, container, promptDiv) {
         ctx.fillStyle = '#FF0027';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const glassTexture = new Image();
-        glassTexture.src = '#FFFFFFF';
-
-        glassTexture.onload = () => {
-            const scale = Math.max(canvas.width / glassTexture.width, canvas.height / glassTexture.height);
-            const x = (canvas.width / 2) - (glassTexture.width / 2) * scale;
-            const y = (canvas.height / 2) - (glassTexture.height / 2) * scale;
-
-            ctx.globalAlpha = 0.9;
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.drawImage(glassTexture, x, y, glassTexture.width * scale, glassTexture.height * scale);
-            ctx.globalAlpha = 1.0;
-        };
-
-        glassTexture.onerror = () => {
-            console.warn("L'image texture-verre.jpg n'a pas été trouvée, le ticket reste gris argenté.");
-        };
-
     }, 50);
 
     function getMousePos(e) {
@@ -602,8 +590,7 @@ if (assistiveOverlay) {
     assistiveOverlay.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
-        // TRUE pour nettoyer toute couleur résiduelle après la fermeture du menu Apple
-        changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
+        resetCouleurPage();
     });
 }
 
@@ -615,7 +602,7 @@ if (btnExplication) {
         assistiveOverlay.classList.remove('active');
 
         const projetInfo = projets[(currentPage * itemsPerPage) + 1];
-        if (projetInfo) ouvrirPopup(projetInfo, true);
+        if (projetInfo) setTimeout(() => ouvrirPopup(projetInfo, true), 50);
     });
 }
 
@@ -648,9 +635,7 @@ if (btnMagic) {
     btnMagic.addEventListener('click', () => {
         assistiveMenu.classList.remove('active');
         assistiveOverlay.classList.remove('active');
-        // TRUE pour remettre le blanc parfait sur tout l'écran après le clic sur la magie
-        changerCouleurNavigateur(couleursPages[currentPage] || '#FFFFFF', true);
-
+        resetCouleurPage();
         if (typeof confetti !== "undefined") {
             confetti({
                 particleCount: 100,

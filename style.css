@@ -125,11 +125,7 @@ body {
 /* --- 3. LE MENU PLEIN ÉCRAN --- */
 #fullscreen-menu {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    inset: 0;
     background-color: #FF0027;
     z-index: 2000;
     display: flex;
@@ -382,11 +378,7 @@ body {
 /* --- 6. POP-UP / FENÊTRE PROJET STYLÉE (LIGHTBOX) --- */
 #lightbox {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -609,12 +601,7 @@ body {
 /* --- 7. PAGE CONTACT --- */
 .contact-page {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    /* Utilise la hauteur dynamique mobile */
+    inset: 0;
     background-color: #FF0027;
     z-index: 1500;
     display: flex;
@@ -910,23 +897,22 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Fond sombre quand le menu est ouvert */
 .assistive-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
     background: rgba(0, 0, 0, 0.3);
     z-index: 3050;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
 .assistive-overlay.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition: opacity 0.3s ease, visibility 0s;
 }
 
 /* Le Menu Pop-up */
@@ -1016,11 +1002,7 @@ body {
 /* --- 10. LOADER / ECRAN D'ACCUEIL --- */
 .site-loader {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    inset: 0;
     /* Utilise la hauteur dynamique mobile */
     background-color: #FFFFFF;
     z-index: 9999;
